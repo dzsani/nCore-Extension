@@ -50,7 +50,7 @@ var torrent_list_auto_pager = {
 			var tmp = $(data);
 
 			// Find the list items
-			tmp.find('.box_torrent').each(function() {
+			tmp.find('.box_torrent_all').children().each(function() {
 				$(this).appendTo('.box_torrent_all');
 			});
 
