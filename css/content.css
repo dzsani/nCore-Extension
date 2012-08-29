@@ -1,0 +1,34 @@
+/* AUTO PAGER */
+
+.ncext_page_marker {
+	width: 100%;
+	height: 30px;
+	border-radius: 5px;
+	font: normal normal bold 20px/30px Arial, serif;
+	text-align: center;
+	letter-spacing: 2px;
+}
+
+/* SCREENSHOT PREVIEWER */
+
+.torrent_kep_ico {
+	margin: 0px !important;
+}
+
+.ncext_preview {
+	width: 100px;
+	height: 100px;
+	position: fixed;
+	left: 0px; top: 0px;
+	z-index: 9999;
+	border: 5px solid #ffffff;
+	border-radius: 5px;
+	box-shadow: 0px 0px 10px #000000;
+	text-align: center;
+	background-color: #ffffff;
+}
+
+.ncext_preview span {
+	font: normal normal normal 16px/100px Arial, serif;
+}
+

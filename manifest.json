@@ -1,0 +1,20 @@
+{
+  "name" : "nCore",
+  "version" : "1.0",
+  "manifest_version" : 2,
+  "description" : "An unofficial Chrome extension for nCore.",
+
+  "permissions" : [
+    "http://ncore.cc/*"
+  ],
+
+  "background" : {
+    "page" : "/html/background.html"
+  },
+
+  "content_scripts" : [{
+    "matches" : ["http://ncore.cc/*"],
+    "css" : ["/css/options.css", "/css/content.css"],
+    "js" : ["/js/jquery.js", "/js/options.js", "/js/content.js"]
+  }]
+}
