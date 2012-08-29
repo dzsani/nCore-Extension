@@ -66,8 +66,8 @@ var screenshot_preview = {
 
 	init : function() {
 
-		$('.fancy_groups, .torrent_lenyilo_tartalom table a').live('mouseenter', function() {
-			screenshot_preview.create(this);
+		$('.fancy_groups, .torrent_lenyilo_tartalom table a').live('mouseenter', function(e) {
+			screenshot_preview.create(e, this);
 		});
 
 		$('.fancy_groups, .torrent_lenyilo_tartalom table a').live('mousemove', function(e) {
@@ -79,7 +79,7 @@ var screenshot_preview = {
 		});
 	},
 
-	create : function(el) {
+	create : function(e, el) {
 
 		// Create the preview element
 		$('<div>').prependTo('body').addClass('ncext_preview');
@@ -88,22 +88,27 @@ var screenshot_preview = {
 		$('<span>').html('Betöltés ...').appendTo('.ncext_preview');
 
 		// Preload the image to show
-		screenshot_preview.preload(el);
+		screenshot_preview.preload(e, el);
 	},
 
-	preload : function(el) {
+	preload : function(e, el) {
 		$('<img>').load(function() {
-			screenshot_preview.show( el, $(this).width(), $(this).height() );
+			screenshot_preview.show(e, el );
 		}).attr('src', $(el).attr('href'));
 	},
 
-	show : function(el, w, h) {
+	show : function(e, el) {
 
 		// Remove loading text
 		$('.ncext_preview span').remove();
 
+		// Remove predefined dimension settings from the wrapper
+		$('.ncext_preview').css({ width : 'auto', height : 'auto' });
+
 		// Append the image
-		$('<img>').attr('src', $(el).attr('href')).width(w).appendTo('.ncext_preview');
+		$('<img>').attr('src', $(el).attr('href')).appendTo('.ncext_preview');
+
+		screenshot_preview.move(e);
 	},
 
 	move : function(e) {
@@ -121,8 +126,6 @@ var screenshot_preview = {
 		var w_width = $(window).width();
 		var w_height = $(window).height();
 
-		// Remove predefined dimension settings from the wrapper
-		$('.ncext_preview').css({ width : 'auto', height : 'auto' });;
 
 		// Horizontal position
 		if(left > w_width / 2) {

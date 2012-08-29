@@ -21,7 +21,7 @@
 	position: fixed;
 	left: 0px; top: 0px;
 	z-index: 9999;
-	border: 5px solid #ffffff;
+	border: 8px solid #ffffff;
 	border-radius: 5px;
 	box-shadow: 0px 0px 10px #000000;
 	text-align: center;
@@ -31,4 +31,3 @@
 .ncext_preview span {
 	font: normal normal normal 16px/100px Arial, serif;
 }
-
