@@ -64,10 +64,12 @@ var torrent_list_auto_pager = {
 
 var screenshot_preview = {
 
+	lastY : 0, lastX : 0,
+
 	init : function() {
 
 		$('.fancy_groups, .torrent_lenyilo_tartalom table a').live('mouseenter', function(e) {
-			screenshot_preview.create(e, this);
+			screenshot_preview.create(this);
 		});
 
 		$('.fancy_groups, .torrent_lenyilo_tartalom table a').live('mousemove', function(e) {
@@ -79,7 +81,7 @@ var screenshot_preview = {
 		});
 	},
 
-	create : function(e, el) {
+	create : function(el) {
 
 		// Create the preview element
 		$('<div>').prependTo('body').addClass('ncext_preview');
@@ -88,16 +90,16 @@ var screenshot_preview = {
 		$('<span>').html('Betöltés ...').appendTo('.ncext_preview');
 
 		// Preload the image to show
-		screenshot_preview.preload(e, el);
+		screenshot_preview.preload(el);
 	},
 
-	preload : function(e, el) {
+	preload : function(el) {
 		$('<img>').load(function() {
-			screenshot_preview.show(e, el );
+			screenshot_preview.show(el );
 		}).attr('src', $(el).attr('href'));
 	},
 
-	show : function(e, el) {
+	show : function(el) {
 
 		// Remove loading text
 		$('.ncext_preview span').remove();
@@ -108,7 +110,8 @@ var screenshot_preview = {
 		// Append the image
 		$('<img>').attr('src', $(el).attr('href')).appendTo('.ncext_preview');
 
-		screenshot_preview.move(e);
+		screenshot_preview.move();
+
 	},
 
 	move : function(e) {
@@ -118,9 +121,14 @@ var screenshot_preview = {
 			return false;
 		}
 
+		if($('.ncext_preview img').length == 0) {
+			screenshot_preview.lastY = e.clientY;
+			screenshot_preview.lastX = e.clientX;
+		}
+
 		// Get dimensions of mouse cursor
-		var top = e.clientY;
-		var left = e.clientX
+		var top = typeof e == "undefined" ? screenshot_preview.lastY : e.clientY;
+		var left = typeof e == "undefined" ? screenshot_preview.lastX : e.clientX;
 
 		// Get viewport dimensions
 		var w_width = $(window).width();
@@ -135,7 +143,7 @@ var screenshot_preview = {
 		}
 
 		// Set images sizes
-		$('.ncext_preview img').css('width', '100%');
+		$('.ncext_preview img').width('100%');
 
 		// Get image dimensions
 		var width = $('.ncext_preview').outerWidth();
@@ -146,9 +154,15 @@ var screenshot_preview = {
 		// Calc preview positions
 		var p_v = (top - height / 2 < 0) ? 0 : top - height / 2;
 		var p_v = (p_v + height > w_height) ? w_height - height : p_v;
-
+		var p_v = (p_v < 0) ? 0 : p_v;
+console.log(height);
 		// Vertical position
 		$('.ncext_preview').css({ bottom : 'auto', top : p_v })
+
+		// Check image height
+		if(height > w_height) {
+			$('.ncext_preview img').height(w_height - 16).width('auto');
+		}
 	},
 
 	destroy : function() {
