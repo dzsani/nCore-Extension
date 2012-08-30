@@ -1,3 +1,6 @@
+var dataStore;
+var port = chrome.extension.connect();
+
 var torrent_list_auto_pager = {
 
 	progress : false,
@@ -11,12 +14,14 @@ var torrent_list_auto_pager = {
 			torrent_list_auto_pager.scroll();
 		});
 
-		if($('#pager_bottom').children().length == 1) {
-			torrent_list_auto_pager.currPage = 1;
-			torrent_list_auto_pager.maxPage = 1;
-		} else {
-			torrent_list_auto_pager.currPage = parseInt($('#pager_bottom .active_link').next().attr('href').match(/\d+/g)) - 1;
-			torrent_list_auto_pager.maxPage = parseInt($('#pager_bottom a:last').attr('href').match(/\d+/g));
+		if(torrent_list_auto_pager.currPage == null) {
+			if($('#pager_bottom').children().length == 1) {
+				torrent_list_auto_pager.currPage = 1;
+				torrent_list_auto_pager.maxPage = 1;
+			} else {
+				torrent_list_auto_pager.currPage = parseInt($('#pager_bottom .active_link').next().attr('href').match(/\d+/g)) - 1;
+				torrent_list_auto_pager.maxPage = parseInt($('#pager_bottom a:last').attr('href').match(/\d+/g));
+			}
 		}
 	},
 
@@ -58,7 +63,10 @@ var torrent_list_auto_pager = {
 			torrent_list_auto_pager.currPage++;
 			torrent_list_auto_pager.counter++;
 		});
+	},
 
+	destroy : function() {
+		$(document).unbind('scroll');
 	}
 };
 
@@ -77,7 +85,7 @@ var screenshot_preview = {
 		});
 
 		$('.fancy_groups, .torrent_lenyilo_tartalom table a').live('mouseleave', function() {
-			screenshot_preview.destroy();
+			screenshot_preview.destroyPreview();
 		});
 	},
 
@@ -155,7 +163,7 @@ var screenshot_preview = {
 		var p_v = (top - height / 2 < 0) ? 0 : top - height / 2;
 		var p_v = (p_v + height > w_height) ? w_height - height : p_v;
 		var p_v = (p_v < 0) ? 0 : p_v;
-console.log(height);
+
 		// Vertical position
 		$('.ncext_preview').css({ bottom : 'auto', top : p_v })
 
@@ -165,18 +173,60 @@ console.log(height);
 		}
 	},
 
-	destroy : function() {
+	destroyPreview : function() {
 		$('.ncext_preview').remove();
+	},
+
+	destroy : function() {
+		$('.fancy_groups, .torrent_lenyilo_tartalom table a').die('mouseenter').die('mousemove').die('mouseleave');
 	}
 };
 
-$(document).ready(function() {
+function extInit() {
+
+	// HOME PAGE
+	if(document.location.href == 'http://ncore.cc/' || document.location.href.indexOf('index.php') != -1) {
+
+		// Settings
+		cp.init(1);
 
 	// TORRENT LIST
-	if(document.location.href.indexOf('torrents.php') != -1) {
+	} else if(document.location.href.indexOf('torrents.php') != -1) {
 
-		torrent_list_auto_pager.init();
-		screenshot_preview.init();
+		// Settings
+		cp.init(2);
+
+		if(dataStore['torrent_list_auto_pager'] == 'true') {
+			torrent_list_auto_pager.init();
+		}
+
+		if(dataStore['screenshot_preview'] == 'true') {
+			screenshot_preview.init();
+		}
+
+	// Not found, show the settings button anyway
+	} else {
+		cp.init(0);
 	}
+}
 
+// Filter out iframes
+// Request settings object
+if (window.top === window) {
+	port.postMessage({ name : "getSettings" });
+}
+
+port.onMessage.addListener(function(event) {
+
+	if(event.name == 'setSettings') {
+
+		// Save localStorage data
+		dataStore = event.message;
+
+		// Add domready event
+		$(document).ready(function() {
+			extInit();
+		});
+
+	}
 });

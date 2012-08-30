@@ -3,6 +3,11 @@
   "version" : "1.0",
   "manifest_version" : 2,
   "description" : "An unofficial Chrome extension for nCore.",
+  "icons": {
+    "16" : "/img/icons/icon16.png",
+    "48" : "/img/icons/icon48.png",
+    "128" : "/img/icons/icon128.png"
+  },
 
   "permissions" : [
     "http://ncore.cc/*"
@@ -16,5 +21,11 @@
     "matches" : ["http://ncore.cc/*"],
     "css" : ["/css/options.css", "/css/content.css"],
     "js" : ["/js/jquery.js", "/js/options.js", "/js/content.js"]
-  }]
+  }],
+
+  "web_accessible_resources": [
+    "/img/settings/icon.png",
+    "/img/settings/button.png",
+    "/img/settings/icons.png"
+  ]
 }
