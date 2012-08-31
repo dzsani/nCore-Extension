@@ -13,7 +13,7 @@ Az nCore nemhivatalos Chrome bővítménye. Ez jelenleg egy work-in-progress pro
 1. Válts fejlesztői módba a felső checkbox-szal és válaszd ki a kicsomagolt bővítmény betöltése opciót!
 1. Tallózd ki a letöltött csomag kitömörített mappáját!
 
-	Amint a bővítményből érdemes telepíthető csomagot készíteni, a GitHub letöltések alatt meg fogjátok találni.
+> Amint a bővítményből érdemes telepíthető csomagot készíteni, a GitHub letöltések alatt meg fogjátok találni.
 
 # Frissítés
 
