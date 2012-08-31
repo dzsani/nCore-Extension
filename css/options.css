@@ -199,6 +199,7 @@
 	width: 100%;
 	border: 1px solid #666;
 	border-collapse: collapse;
+	color: #333;
 }
 
 #ncext_opt_saved_searches tr:hover {

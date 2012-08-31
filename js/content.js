@@ -278,7 +278,7 @@ var save_this_search = {
 		);
 
 		// Add overlay live click event
-		$('#ncext_saved_searches_overlay').live('click', function() {
+		$('#ncext_saved_searches_overlay').die('click').live('click', function() {
 			$('#ncext_saved_searches h5').click();
 		});
 
