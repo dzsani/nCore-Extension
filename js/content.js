@@ -184,17 +184,11 @@ var screenshot_preview = {
 
 function extInit() {
 
-	// HOME PAGE
-	if(document.location.href == 'http://ncore.cc/' || document.location.href.indexOf('index.php') != -1) {
+	// TORRENTS
+	if(document.location.href.indexOf('torrents.php') != -1) {
 
 		// Settings
 		cp.init(1);
-
-	// TORRENT LIST
-	} else if(document.location.href.indexOf('torrents.php') != -1) {
-
-		// Settings
-		cp.init(2);
 
 		if(dataStore['torrent_list_auto_pager'] == 'true') {
 			torrent_list_auto_pager.init();
@@ -203,6 +197,10 @@ function extInit() {
 		if(dataStore['screenshot_preview'] == 'true') {
 			screenshot_preview.init();
 		}
+
+	// FORUMS
+	} else if(document.location.href.indexOf('forum.php') != -1) {
+		cp.init(2);
 
 	// Not found, show the settings button anyway
 	} else {
