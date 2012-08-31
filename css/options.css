@@ -17,7 +17,7 @@
 	left: 0px;
 	background-color: #666;
 	display: none;
-	z-index: 90;
+	z-index: 1002;
 }
 
 #ncext_settings_wrapper {
@@ -27,7 +27,7 @@
 	top: -9000px;
 	left: 0px;
 
-	z-index: 100;
+	z-index: 1003;
 
 	background-color: #ededed;
 	box-shadow: #333 0px 0px 15px;
@@ -191,4 +191,41 @@
 }
 
 .ncext_settings_page p.sub {
+}
+
+/* SAVED SEARCHES */
+
+#ncext_opt_saved_searches {
+	width: 100%;
+	border: 1px solid #666;
+	border-collapse: collapse;
+}
+
+#ncext_opt_saved_searches tr:hover {
+	background-color: #DDD;
+}
+
+#ncext_opt_saved_searches tr:first-child {
+	background-color: transparent !important;
+}
+
+#ncext_opt_saved_searches th {
+	text-align: center;
+}
+
+#ncext_opt_saved_searches th, #ncext_opt_saved_searches td {
+	border: 1px solid #666;
+	padding: 2px;
+}
+
+#ncext_opt_saved_searches td {
+	font: normal normal normal 13px/16px Arial, serif;
+}
+
+#ncext_opt_saved_searches td:last-child {
+	text-align: center;
+}
+
+#ncext_opt_saved_searches a:hover {
+	color: red;
 }

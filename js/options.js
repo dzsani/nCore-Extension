@@ -58,7 +58,14 @@ var cp = {
 				html += 'HAMAROSAN!';
 			html += '</div>';
 			html += '<div class="ncext_settings_page">';
-				html += 'HAMAROSAN!';
+				html += '<table id="ncext_opt_saved_searches">';
+					html += '<tr>';
+						html += '<th>Kulcsszavak</th>';
+						html += '<th>Kategóriák</th>';
+						html += '<th>Alkategóriák</th>';
+						html += '<th>Törlés</th>';
+					html += '</tr>';
+				html += '</table>';
 			html += '</div>';
 		html += '</div>';
 
@@ -107,6 +114,8 @@ var cp = {
 		$('.ncext_settings_page select').change(function() {
 			settings.select(this);
 		});
+
+		cp_saved_searches.init();
 	},
 
 	show : function() {
@@ -270,3 +279,66 @@ var settings = {
 	}
 };
 
+var cp_saved_searches = {
+
+	init : function() {
+
+		// Remove event
+		$('#ncext_opt_saved_searches a').live('click', function(e) {
+			e.preventDefault();
+			cp_saved_searches.remove(this);
+		});
+
+		// Generate the list
+		cp_saved_searches.generateList();
+	},
+
+	generateList : function() {
+
+		// Get the list
+		var list = JSON.parse(dataStore['saved_searches']);
+
+		// Do nothing when the list is empty
+		if(list.length < 1) {
+			$('<tr><td colspan="4">Jelenleg még nem mentettél el egyetlen keresést sem!</td></tr>').appendTo('#ncext_opt_saved_searches');
+			return;
+		}
+
+		// Remove old entries
+		$('#ncext_opt_saved_searches tr:gt(0)').remove();
+
+		// Build the new list
+		for(c = 0; c < list.length; c++) {
+
+			// Generate the row
+			var item = $('<tr>').appendTo('#ncext_opt_saved_searches');
+			$('<td>').html( list[c]['keywords'] ).appendTo(item);
+			$('<td>').html( list[c]['categories'].join(',') ).appendTo(item);
+			$('<td>').html( list[c]['subcategories'].join(',') ).appendTo(item);
+			$('<td><a href="#">Töröl</a></td>').appendTo(item);
+		}
+	},
+
+	remove : function(el) {
+
+		// Get the element index
+		var index = $(el).closest('tr').index();
+
+		// Remove the row in the admin panel
+		$('#ncext_opt_saved_searches tr').eq( index ).remove();
+
+		// Remove the row in the front-end panel
+		save_this_search.removeRow( index );
+
+		// Remove the entry from LocalStorage
+		port.postMessage({ name : "removeSavedSearch", message : index - 1 });
+
+		// Update local dataStore object
+		port.postMessage({ name : "getSettings" });
+
+		// Check content
+		if( $('#ncext_opt_saved_searches tr').length < 2) {
+			$('<tr><td colspan="4">Jelenleg még nem mentettél el egyetlen keresést sem!</td></tr>').appendTo('#ncext_opt_saved_searches');
+		}
+	}
+};

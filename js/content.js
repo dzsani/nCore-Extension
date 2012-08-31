@@ -1,4 +1,5 @@
 var dataStore;
+var pageInit = false;
 var port = chrome.extension.connect();
 
 var torrent_list_auto_pager = {
@@ -182,6 +183,137 @@ var screenshot_preview = {
 	}
 };
 
+var save_this_search = {
+
+	init : function() {
+
+		// Create the save button
+		$('<a>').attr('href', '#').attr('id', 'ncext_save_this_search').html('[keresés mentése]').appendTo('#keresoresz tr:eq(2) td:eq(4)');
+
+		// Add click event to the save button
+		$('#ncext_save_this_search').click(function(e) {
+			e.preventDefault();
+			save_this_search.save();
+		});
+
+		// Generate the list
+		save_this_search.generateList();
+	},
+
+	save : function() {
+
+		var categories = [];
+		var subcategories = [];
+
+		// Get categories
+		$('#table_torrcat input:checked').each(function() {
+			categories.push( $(this).parent().next().find('a').html() );
+		});
+
+		// Get subcategories
+		$('#kereses_mezo > div input:checked').each(function() {
+			subcategories.push( $(this).parent().next().find('a').html() );
+		});
+
+		// Build the search object
+		var search = {
+			keywords : $('#mire').val(),
+			categories: categories,
+			subcategories : subcategories,
+			data : $('#kategoriak form:first').serialize(),
+			added : Math.round(new Date().getTime() / 1000),
+			lastCheck : Math.round(new Date().getTime() / 1000),
+			counter : 0
+		};
+
+		// Save to localStorage
+		port.postMessage({ name : "addSavedSearch", message : search });
+
+		// Update local dataStore object
+		port.postMessage({ name : "getSettings" });
+
+		// Update the list
+		setTimeout(function() {
+			save_this_search.generateList();
+		}, 500);
+
+		// Update the control panel
+		setTimeout(function() {
+			cp_saved_searches.generateList();
+		}, 500);
+
+		// Indicate the save success
+		$('#keresoresz tr:eq(2) td:eq(4)').html('<span style="color: #4db02f;">Elmentve!</span>');
+	},
+
+	generateList : function() {
+
+		// Get the list
+		var list = JSON.parse(dataStore['saved_searches']);
+
+		// Do nothing when the list is empty
+		if(list.length < 1) {
+			return false;
+		}
+
+		// Remove the old list if any
+		$('#ncext_saved_searches').remove();
+
+		// Create the list
+		$('<div><h5>Keresések</h5><div id="ncext_saved_searches_list"><table><tr><th>Kulcsszavak</th><th>Kategoriak</th><th>Alkategóriák</th></tr></table></div></div>').attr('id', 'ncext_saved_searches').appendTo('body');
+
+		// Add click event
+		$('#ncext_saved_searches h5').toggle(
+			function() {
+				$(this).css({ opacity : 1 });
+				$(this).parent().animate({ right : 0 });
+				$('<div>').attr('id', 'ncext_saved_searches_overlay').appendTo('body');
+			},
+
+			function() {
+				$(this).removeAttr('style');
+				$(this).parent().animate({ right : -530 });
+				$('#ncext_saved_searches_overlay').remove();
+			}
+		);
+
+		// Add overlay live click event
+		$('#ncext_saved_searches_overlay').live('click', function() {
+			$('#ncext_saved_searches h5').click();
+		});
+
+
+		// Build the new list
+		for(c = 0; c < list.length; c++) {
+
+			// Generate the row
+			var item = $('<tr>').appendTo('#ncext_saved_searches table');
+			$('<td>').html( list[c]['keywords'] ).appendTo(item);
+			$('<td>').html( list[c]['categories'].join(',') ).appendTo(item);
+			$('<td>').html( list[c]['subcategories'].join(',') ).appendTo(item);
+
+			// Add click event
+			$(item).click(function() {
+				document.location.href = 'torrents.php?' + list[ $(this).index() - 1 ]['data'];
+			});
+		}
+	},
+
+	removeRow : function(index) {
+
+		$('#ncext_saved_searches table tr').eq( index ).remove();
+
+		if($('#ncext_saved_searches table tr').length < 2) {
+			$('#ncext_saved_searches').remove();
+		}
+
+	},
+
+	destroy : function() {
+
+	}
+};
+
 function extInit() {
 
 	// TORRENTS
@@ -197,6 +329,8 @@ function extInit() {
 		if(dataStore['screenshot_preview'] == 'true') {
 			screenshot_preview.init();
 		}
+
+		save_this_search.init();
 
 	// FORUMS
 	} else if(document.location.href.indexOf('forum.php') != -1) {
@@ -222,9 +356,11 @@ port.onMessage.addListener(function(event) {
 		dataStore = event.message;
 
 		// Add domready event
-		$(document).ready(function() {
-			extInit();
-		});
-
+		if(pageInit == false) {
+			$(document).ready(function() {
+				pageInit = true;
+				extInit();
+			});
+		}
 	}
 });

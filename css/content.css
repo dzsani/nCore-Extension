@@ -32,3 +32,78 @@
 .ncext_preview span {
 	font: normal normal normal 16px/100px Arial, serif;
 }
+
+/* SAVED SEARCHES */
+#ncext_saved_searches {
+	width: 510px;
+	min-height: 100px;
+	max-height: 500px;
+	padding: 10px;
+	position: fixed;
+	right: -530px;
+	top: 50px;
+	z-index: 1001;
+	background-color: #333;
+	color: #ffffff;
+	border-bottom-left-radius: 5px;
+}
+
+#ncext_saved_searches_list {
+	max-height: 500px;
+	overflow: auto;
+}
+
+#ncext_saved_searches h5 {
+	width: 80px;
+	height: 30px;
+	margin: 0px;
+	padding: 0px;
+	position: absolute;
+	top: 0px;
+	left: -80px;
+	font: normal normal normal 11px/30px Arial, serif;
+	text-transform: uppercase;
+	background-color: #333;
+	text-align: center;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	cursor: pointer;
+	opacity: 0.5;
+}
+
+#ncext_saved_searches h5:hover {
+	opacity: 1;
+}
+
+#ncext_saved_searches_overlay {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0px; left: 0px;
+	z-index: 1000;
+}
+
+#ncext_saved_searches table {
+	width: 100%;
+	border: 1px solid #666;
+	border-collapse:collapse;
+}
+
+#ncext_saved_searches table th, #ncext_saved_searches table td {
+	padding: 2px;
+	border: 1px solid #666;
+}
+
+#ncext_saved_searches table td {
+	font: normal normal normal 12px/16px Arial, serif;
+}
+
+#ncext_saved_searches table tr:hover {
+	background-color: #444;
+	cursor: pointer;
+}
+
+#ncext_saved_searches table tr:first-child {
+	background-color: transparent !important;
+	cursor: default !important;
+}
