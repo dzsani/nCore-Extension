@@ -2,11 +2,12 @@
 
 .ncext_page_marker {
 	width: 100%;
-	height: 30px;
+	height: 50px;
 	border-radius: 5px;
-	font: normal normal bold 20px/30px Arial, serif;
+	font: normal normal bold 22px/50px Arial, serif;
 	text-align: center;
-	letter-spacing: 2px;
+	letter-spacing: 3px;
+	text-transform: uppercase;
 }
 
 /* SCREENSHOT PREVIEWER */
