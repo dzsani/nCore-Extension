@@ -44,7 +44,7 @@ var cp = {
 				html += '</div>';
 				html += '<div>';
 					html += '<h3>Képernyőképek előnézetének mutatása</h3>';
-					html += '<p>Ha az egérkurzorral a képernyőképek fölé mész, a bővítmény azonnal megjeleníti a kép előnézetét kattintás nélkül.</p>';
+					html += '<p>Ha az egérkurzort a képernyőképek fölé viszed, a bővítmény azonnal megjeleníti a kép előnézetét kattintás nélkül.</p>';
 					html += '<div class="button" id="screenshot_preview"></div>';
 				html += '</div>';
 			html += '</div>';
@@ -57,7 +57,7 @@ var cp = {
 			html += '</div>';
 			html += '<div class="ncext_settings_page" id="ncext_opt_notifications">';
 				html += '<h3>A figyelmeztetésekről</h3>';
-				html += '<p>A mentett kereséseknél lehetőség van figyelmeztetéseket kérni, a bővítmény automatikusan ellenőrzi bizonyos időközönként a feltöltött torrenteket és desktop figyelmeztetést fog küldeni neked ha például a kedved sorozathoz feltöltöttek egy új részt! Ez a funkció akkor is működik, ha a böngésző el sincs indítva. <br><br><strong>FONTOS:</strong> ez a funkció csak akkor működik, ha belépésnél a csökkentett biztonságot választottad!</p>';
+				html += '<p>A mentett kereséseknél lehetőség van figyelmeztetéseket kérni, a bővítmény automatikusan ellenőrzi bizonyos időközönként a feltöltött torrenteket és desktop figyelmeztetést fog küldeni neked ha például a kedvenc sorozathoz feltöltöttek egy új részt! Ez a funkció akkor is működik, ha a böngésző el sincs indítva. <br><br><strong>FONTOS:</strong> ez a funkció csak akkor működik, ha belépésnél a csökkentett biztonságot választottad!</p>';
 				html += '<table id="ncext_opt_saved_searches">';
 					html += '<tr>';
 						html += '<th>Kulcsszavak</th>';
