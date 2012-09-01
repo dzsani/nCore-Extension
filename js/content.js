@@ -332,7 +332,6 @@ function extInit() {
 			screenshot_preview.init();
 		}
 
-		save_this_search.init();
 
 	// FORUMS
 	} else if(document.location.href.indexOf('forum.php') != -1) {
@@ -342,6 +341,9 @@ function extInit() {
 	} else {
 		cp.init(0);
 	}
+
+	// Shared
+	save_this_search.init();
 }
 
 // Filter out iframes
