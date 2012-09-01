@@ -33,7 +33,7 @@ var cp = {
 			html += '<div class="ncext_settings_page">';
 				html += '<h3>nCore</h3>';
 				html += '<p>Verzió: 1.0.0<br></p>';
-				html += '<p>Kiadás dátuma: 2012. 08. 30.</p>';
+				html += '<p>Kiadás dátuma: 2012. 09. 01.</p>';
 			html += '</div>';
 
 			html += '<div class="ncext_settings_page">';
