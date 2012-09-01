@@ -87,6 +87,7 @@
 	display: none;
 	padding: 20px;
 	text-align: justify;
+	color: #333;
 }
 
 #ncext_settings_header li:nth-child(1) {
