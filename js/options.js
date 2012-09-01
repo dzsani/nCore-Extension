@@ -34,7 +34,6 @@ var cp = {
 				html += '<h3>nCore</h3>';
 				html += '<p>Verzió: 1.0.0<br></p>';
 				html += '<p>Kiadás dátuma: 2012. 08. 30.</p>';
-				html += '<p>Fejlesztő: Gera János "dzsani" <a href="http://kreaturamedia.com" target="_blank">http://kreaturamedia.com</a></p>';
 			html += '</div>';
 
 			html += '<div class="ncext_settings_page">';

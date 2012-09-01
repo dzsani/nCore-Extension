@@ -160,7 +160,7 @@ var notifications = {
 
 			// Update the obj
 			watchlist[index]['lastCheck'] = Math.round(new Date().getTime() / 1000);
-			watchlist[index]['lastId'] = id;
+			watchlist[index]['lastId'] = id[0];
 
 			// Save the obj
 			localStorage['saved_searches'] = JSON.stringify(watchlist);
@@ -234,7 +234,7 @@ var notifications = {
 
 			// Update the obj
 			watchlist[index]['lastCheck'] = Math.round(new Date().getTime() / 1000);
-			watchlist[index]['lastId'] = id;
+			watchlist[index]['lastId'] = id[0];
 
 			// Save the obj
 			localStorage['saved_searches'] = JSON.stringify(watchlist);
