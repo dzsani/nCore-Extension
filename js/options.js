@@ -57,12 +57,20 @@ var cp = {
 			html += '<div class="ncext_settings_page">';
 				html += 'HAMAROSAN!';
 			html += '</div>';
-			html += '<div class="ncext_settings_page">';
+			html += '<div class="ncext_settings_page" id="ncext_opt_notifications">';
+				html += '<h3>A figyelmeztetésekhez be kell lépned!</h3>';
+				html += '<p>A bővítmény egy elszigetelt, homogén környezetben (sandbox) fut, így nem tudja lekérni az adatokat, mivel az oldal kiléptetett felhasználónak fogja azonosítani. A figyelmeztetések funkcióhoz meg kell adnod a felhasználói profilod adatait. A bővítmény ezt nem fogja sehol sem eltárolni! Figyelem: nem kell kitöltened ezeket a mezőket ha félted az adataidat. A bővítmény továbbra is működőképes marad, csak a figyelmeztetések funkció lesz elérhetetlen.</p>';
+				html += '<p class="login_credentials">';
+					html +='<strong>Felhasználónév:</strong> <input type="text" value="'+dataStore['notification_username']+'"> ';
+					html +='<strong>Jelszó</strong> <input type="password" value="'+dataStore['notification_password']+'">';
+					html += '<button>Belépés</button>';
+				html +='</p>';
 				html += '<table id="ncext_opt_saved_searches">';
 					html += '<tr>';
 						html += '<th>Kulcsszavak</th>';
 						html += '<th>Kategóriák</th>';
 						html += '<th>Alkategóriák</th>';
+						html += '<th>Figyelmeztetés</th>';
 						html += '<th>Törlés</th>';
 					html += '</tr>';
 				html += '</table>';
@@ -289,8 +297,42 @@ var cp_saved_searches = {
 			cp_saved_searches.remove(this);
 		});
 
+		// Watch toggle
+		$('#ncext_opt_saved_searches :checkbox').live('click', function() {
+			cp_saved_searches.watch(this);
+		});
+
+		$('#ncext_opt_notifications button').click(function() {
+
+			var user = $(this).parent().find('input:eq(0)').val();
+			var pass = $(this).parent().find('input:eq(1)').val();
+
+			cp_saved_searches.login(user, pass, this);
+		});
+
 		// Generate the list
 		cp_saved_searches.generateList();
+	},
+
+	login : function(user, pass, button) {
+
+		$.post('http://ncore.cc/login.php', { set_lang : 'hu', submitted : '1', nev : user, pass : pass }, function(data) {
+
+			var matches = data.match(/<title>(.*?)<\/title>/);
+
+			// Show alert on error
+			if( matches[1] == 'nCore') {
+				alert('Hibás felhasználónév vagy jelszó!');
+
+			// Store and set the button for feedback
+			} else {
+				port.postMessage({ name : 'storeLoginCredentials', message : { user : user, pass : pass } });
+				$(button).html('Elmentve!').addClass('active');
+				setTimeout(function() {
+					$(button).html('Belépés').removeClass('active');
+				}, 2000);
+			}
+		});
 	},
 
 	generateList : function() {
@@ -300,7 +342,7 @@ var cp_saved_searches = {
 
 		// Do nothing when the list is empty
 		if(list.length < 1) {
-			$('<tr><td colspan="4">Jelenleg még nem mentettél el egyetlen keresést sem!</td></tr>').appendTo('#ncext_opt_saved_searches');
+			$('<tr><td colspan="5">Jelenleg még nem mentettél el egyetlen keresést sem!</td></tr>').appendTo('#ncext_opt_saved_searches');
 			return;
 		}
 
@@ -315,7 +357,13 @@ var cp_saved_searches = {
 			$('<td>').html( list[c]['keywords'] ).appendTo(item);
 			$('<td>').html( list[c]['categories'].join(',') ).appendTo(item);
 			$('<td>').html( list[c]['subcategories'].join(',') ).appendTo(item);
-			$('<td><a href="#">Töröl</a></td>').appendTo(item);
+			$('<td>').html('<label><input type="checkbox"><span>Nem</span></label>').appendTo(item);
+
+			if(list[c]['watch'] == true) {
+				$(item).find(':checkbox').prop('checked', true);
+				$(item).find('span').html('Igen');
+			}
+			$('<td><a href="#" title="Törlés"><img src="'+chrome.extension.getURL('/img/settings/remove.png')+'" alt="Törlés"></a></td>').appendTo(item);
 		}
 	},
 
@@ -338,7 +386,18 @@ var cp_saved_searches = {
 
 		// Check content
 		if( $('#ncext_opt_saved_searches tr').length < 2) {
-			$('<tr><td colspan="4">Jelenleg még nem mentettél el egyetlen keresést sem!</td></tr>').appendTo('#ncext_opt_saved_searches');
+			$('<tr><td colspan="5">Jelenleg még nem mentettél el egyetlen keresést sem!</td></tr>').appendTo('#ncext_opt_saved_searches');
+		}
+	},
+
+	watch : function(el) {
+
+		if($(el).prop('checked') == true) {
+			$(el).next().html('Igen');
+			port.postMessage({ name : 'setWatchStatus', message : { index : $(el).closest('tr').index() - 1, status : true } });
+		} else {
+			$(el).next().html('Nem');
+			port.postMessage({ name : 'setWatchStatus', message : { index : $(el).closest('tr').index() - 1, status : false } });
 		}
 	}
 };

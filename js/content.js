@@ -223,7 +223,9 @@ var save_this_search = {
 			data : $('#kategoriak form:first').serialize(),
 			added : Math.round(new Date().getTime() / 1000),
 			lastCheck : Math.round(new Date().getTime() / 1000),
-			counter : 0
+			lastId : 0,
+			counter : 0,
+			watch : false
 		};
 
 		// Save to localStorage
@@ -362,5 +364,9 @@ port.onMessage.addListener(function(event) {
 				extInit();
 			});
 		}
+
+	// Show alert
+	} else if(event.name == 'showAlert') {
+		alert(event.message);
 	}
 });

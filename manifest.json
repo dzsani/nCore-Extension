@@ -1,6 +1,6 @@
 {
   "name" : "nCore",
-  "version" : "1.0",
+  "version" : "1.0.0",
   "manifest_version" : 2,
   "description" : "An unofficial Chrome extension for nCore.",
   "icons": {
@@ -10,6 +10,8 @@
   },
 
   "permissions" : [
+    "background",
+    "notifications",
     "http://ncore.cc/*"
   ],
 
@@ -26,6 +28,8 @@
   "web_accessible_resources": [
     "/img/settings/icon.png",
     "/img/settings/button.png",
-    "/img/settings/icons.png"
+    "/img/settings/icons.png",
+    "/img/settings/remove.png",
+    "/img/icons/icon48.png"
   ]
 }
