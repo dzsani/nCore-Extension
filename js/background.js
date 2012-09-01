@@ -2,8 +2,6 @@
 if( typeof localStorage['torrent_list_auto_pager']		== 'undefined') localStorage['torrent_list_auto_pager'] = 'true';
 if( typeof localStorage['screenshot_preview'] 			== 'undefined') localStorage['screenshot_preview'] 		= 'true';
 if( typeof localStorage['saved_searches'] 				== 'undefined') localStorage['saved_searches'] 			= '[]';
-if( typeof localStorage['notification_username'] 		== 'undefined') localStorage['notification_username'] 	= '';
-if( typeof localStorage['notification_password'] 		== 'undefined') localStorage['notification_password'] 	= '';
 
 chrome.extension.onConnect.addListener(function(port) {
 	port.onMessage.addListener(function(event) {
@@ -54,13 +52,6 @@ chrome.extension.onConnect.addListener(function(port) {
 				notifications.restart();
 			}
 
-		// Store user&pass
-		} else if(event.name == 'storeLoginCredentials') {
-			localStorage['notification_username'] = event.message.user;
-			localStorage['notification_password'] = event.message.pass;
-
-			notifications.restart();
-
 		} else if(event.name == 'setWatchStatus') {
 
 			// Parse JSON
@@ -80,7 +71,7 @@ chrome.extension.onConnect.addListener(function(port) {
 			}
 
 		// Update notifications
-		} else if(event.name = 'updateNotifications') {
+		} else if(event.name == 'updateNotifications') {
 			notifications.restart();
 		}
 	});
@@ -147,23 +138,25 @@ var notifications = {
 
 	add : function(index) {
 
-		// Check login
-		if(localStorage['notification_username'] == '') {
-			return;
-		}
-
 		// Get the object
 		var watchlist = JSON.parse(localStorage['saved_searches']);
 		var obj = watchlist[index];
 
 		// Query data
-		$.post('http://ncore.cc/login.php?honnan=/torrents.php?'+obj['data']+'', { set_lang : 'hu', submitted : '1', nev : localStorage['notification_username'], pass : localStorage['notification_password'] }, function(data) {
+		$.post('http://ncore.cc/torrents.php?'+obj['data']+'', { set_lang : 'hu', submitted : '1', nev : localStorage['notification_username'], pass : localStorage['notification_password'] }, function(data) {
+
+			// Login check
+			var matches = data.match(/<title>(.*?)<\/title>/);
 
 			// Parse the response
 			var tmp = $(data);
 
-			// Get ID
-			var id = tmp.find('.box_torrent:first').find('.torrent_txt a:first, .torrent_txt2 a:first').attr('onclick').match(/\d+/g);
+			// Check the element, get the last ID
+			if(tmp.find('.box_torrent:first').find('.torrent_txt a:first, .torrent_txt2 a:first').length < 1) {
+				var id = 0;
+			} else {
+				var id = tmp.find('.box_torrent:first').find('.torrent_txt a:first, .torrent_txt2 a:first').attr('onclick').match(/\d+/g);
+			}
 
 			// Update the obj
 			watchlist[index]['lastCheck'] = Math.round(new Date().getTime() / 1000);
@@ -191,15 +184,13 @@ var notifications = {
 		var watchlist = JSON.parse(localStorage['saved_searches']);
 		var obj = watchlist[index];
 
-		$.post('http://ncore.cc/login.php?honnan=/torrents.php?'+obj['data']+'', { set_lang : 'hu', submitted : '1', nev : localStorage['notification_username'], pass : localStorage['notification_password'] }, function(data) {
-
+		$.post('http://ncore.cc/torrents.php?'+obj['data']+'', { set_lang : 'hu', submitted : '1', nev : localStorage['notification_username'], pass : localStorage['notification_password'] }, function(data) {
 
 			// Login check
 			var matches = data.match(/<title>(.*?)<\/title>/);
 
 			if(matches[1] == 'nCore') {
-				localStorage['notification_username'] = '';
-				localStorage['notification_password'] = '';
+				return;
 			}
 
 			// Parse the response

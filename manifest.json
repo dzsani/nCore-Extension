@@ -10,6 +10,7 @@
   },
 
   "permissions" : [
+    "cookies",
     "background",
     "notifications",
     "http://ncore.cc/*"

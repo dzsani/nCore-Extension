@@ -28,7 +28,6 @@ var cp = {
 				html += '<li>Fórum</li>';
 				html += '<li>Egyéb</li>';
 				html += '<li>Keresések</li>';
-				html += '<li class="clear"></li>';
 			html += '</ul>';
 
 			html += '<div class="ncext_settings_page">';
@@ -58,13 +57,8 @@ var cp = {
 				html += 'HAMAROSAN!';
 			html += '</div>';
 			html += '<div class="ncext_settings_page" id="ncext_opt_notifications">';
-				html += '<h3>A figyelmeztetésekhez be kell lépned!</h3>';
-				html += '<p>A bővítmény egy elszigetelt, homogén környezetben (sandbox) fut, így nem tudja lekérni az adatokat, mivel az oldal kiléptetett felhasználónak fogja azonosítani. A figyelmeztetések funkcióhoz meg kell adnod a felhasználói profilod adatait. A bővítmény ezt nem fogja sehol sem eltárolni! Figyelem: nem kell kitöltened ezeket a mezőket ha félted az adataidat. A bővítmény továbbra is működőképes marad, csak a figyelmeztetések funkció lesz elérhetetlen.</p>';
-				html += '<p class="login_credentials">';
-					html +='<strong>Felhasználónév:</strong> <input type="text" value="'+dataStore['notification_username']+'"> ';
-					html +='<strong>Jelszó</strong> <input type="password" value="'+dataStore['notification_password']+'">';
-					html += '<button>Belépés</button>';
-				html +='</p>';
+				html += '<h3>A figyelmeztetésekről</h3>';
+				html += '<p>A mentett kereséseknél lehetőség van figyelmeztetéseket kérni, a bővítmény automatikusan ellenőrzi bizonyos időközönként a feltöltött torrenteket és desktop figyelmeztetést fog küldeni neked ha például a kedved sorozathoz feltöltöttek egy új részt! Ez a funkció akkor is működik, ha a böngésző el sincs indítva. <br><br><strong>FONTOS:</strong> ez a funkció csak akkor működik, ha belépésnél a csökkentett biztonságot választottad!</p>';
 				html += '<table id="ncext_opt_saved_searches">';
 					html += '<tr>';
 						html += '<th>Kulcsszavak</th>';
@@ -312,27 +306,6 @@ var cp_saved_searches = {
 
 		// Generate the list
 		cp_saved_searches.generateList();
-	},
-
-	login : function(user, pass, button) {
-
-		$.post('http://ncore.cc/login.php', { set_lang : 'hu', submitted : '1', nev : user, pass : pass }, function(data) {
-
-			var matches = data.match(/<title>(.*?)<\/title>/);
-
-			// Show alert on error
-			if( matches[1] == 'nCore') {
-				alert('Hibás felhasználónév vagy jelszó!');
-
-			// Store and set the button for feedback
-			} else {
-				port.postMessage({ name : 'storeLoginCredentials', message : { user : user, pass : pass } });
-				$(button).html('Elmentve!').addClass('active');
-				setTimeout(function() {
-					$(button).html('Belépés').removeClass('active');
-				}, 2000);
-			}
-		});
 	},
 
 	generateList : function() {
