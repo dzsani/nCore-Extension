@@ -38,4 +38,4 @@ Az nCore nemhivatalos Chrome bővítménye. Ez jelenleg egy work-in-progress pro
 ## Firefox
 
 1. Írd felül a régi mappát!
-1. * https://addons.mozilla.org/en-US/developers/docs/sdk/latest/dev-guide/tutorials/getting-started-with-cfx.html
+1. https://addons.mozilla.org/en-US/developers/docs/sdk/latest/dev-guide/tutorials/getting-started-with-cfx.html
