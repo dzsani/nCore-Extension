@@ -3,7 +3,7 @@ var cp = {
 	init : function(page) {
 
 		// Create the settings button
-		$('<div id="ncext_settings_button"><img src="'+chrome.extension.getURL('/img/settings/icon.png')+'" alt=""></div>').appendTo('body');
+		$('<div id="ncext_settings_button"><img src="resource://ncore-at-kreaturamedia-dot-com/ncore/data/img/settings/icon.png" alt=""></div>').appendTo('body');
 
 		// Create the hiding overlay
 		$('<div id="ncext_settings_hide_overlay"></div>').appendTo('body');
@@ -80,7 +80,7 @@ var cp = {
 		$(html).appendTo('body');
 
 		// Set header list backgrounds
-		$('#ncext_settings_header li').css({ 'background-image' : 'url('+chrome.extension.getURL('/img/settings/icons.png')+')' });
+		$('#ncext_settings_header li').css({ 'background-image' : 'url(resource://ncore-at-kreaturamedia-dot-com/ncore/data/img/settings/icons.png)' });
 
 		// Create tabs event
 		$('#ncext_settings_header li').click(function() {
@@ -89,7 +89,7 @@ var cp = {
 		});
 
 		// Add buttons background image
-		$('.ncext_settings_page .button').css({ 'background-image' : 'url('+chrome.extension.getURL('/img/settings/button.png')+')' });
+		$('.ncext_settings_page .button').css({ 'background-image' : 'url(resource://ncore-at-kreaturamedia-dot-com/ncore/data/img/settings/button.png)' });
 
 		// Get the requested page number
 		var page  = typeof page == "undefined" ? 0 : page;
@@ -221,7 +221,7 @@ var settings = {
 		// Restore settings for buttons
 		$('.ncext_settings_page .button').each(function() {
 
-			if(dataStore[ $(this).attr('id') ] == 'true') {
+			if(dataStore[ $(this).attr('id') ] == true) {
 				$(this).attr('class', 'button on');
 
 			} else {
@@ -232,7 +232,7 @@ var settings = {
 		// Restore settings for checkboxes
 		$('.ncext_settings_page input:checkbox').each(function() {
 
-			if(dataStore[ $(this).attr('id') ] == 'true') {
+			if(dataStore[ $(this).attr('id') ] == true) {
 				$(this).attr('checked', true);
 			} else {
 				$(this).attr('checked', false);
@@ -251,10 +251,10 @@ var settings = {
 		if( $(ele).hasClass('on') || $(ele).attr('checked') == 'checked' || $(ele).attr('checked') == true) {
 
 			// Save new settings ...
-			port.postMessage({ name : "setSetting", key : $(ele).attr('id'), val : 'true' });
+			self.postMessage({ name : "setSetting", key : $(ele).attr('id'), val : true });
 
 			// Set new value to dataStore var
-			dataStore[$(ele).attr('id')] = 'true';
+			dataStore[$(ele).attr('id')] = true;
 
 			// Activate the feature in real-time
 			window[$(ele).attr('id')].init();
@@ -262,10 +262,10 @@ var settings = {
 		} else {
 
 			// Save new settings ...
-			port.postMessage({ name : "setSetting", key : $(ele).attr('id'), val : 'false' });
+			self.postMessage({ name : "setSetting", key : $(ele).attr('id'), val : false });
 
 			// Set new value to dataStore var
-			dataStore[$(ele).attr('id')] = 'false';
+			dataStore[$(ele).attr('id')] = false;
 
 			// Disable the feature in real-time
 			window[$(ele).attr('id')].destroy();
@@ -281,7 +281,7 @@ var settings = {
 		dataStore[ $(el).attr('id') ] = val;
 
 		// Update in localStorage
-		port.postMessage({ name : "setSetting", key : $(ele).attr('id'), val : val });
+		self.postMessage({ name : "setSetting", key : $(ele).attr('id'), val : val });
 	}
 };
 
@@ -340,7 +340,7 @@ var cp_saved_searches = {
 				$(item).find(':checkbox').prop('checked', true);
 				$(item).find('span').html('Igen');
 			}
-			$('<td><a href="#" title="Törlés"><img src="'+chrome.extension.getURL('/img/settings/remove.png')+'" alt="Törlés"></a></td>').appendTo(item);
+			$('<td><a href="#" title="Törlés"><img src="resource://ncore-at-kreaturamedia-dot-com/ncore/data/img/settings/remove.png" alt="Törlés"></a></td>').appendTo(item);
 		}
 	},
 
@@ -356,10 +356,10 @@ var cp_saved_searches = {
 		save_this_search.removeRow( index );
 
 		// Remove the entry from LocalStorage
-		port.postMessage({ name : "removeSavedSearch", message : index - 1 });
+		self.postMessage({ name : "removeSavedSearch", message : index - 1 });
 
 		// Update local dataStore object
-		port.postMessage({ name : "getSettings" });
+		self.postMessage({ name : "getSettings" });
 
 		// Check content
 		if( $('#ncext_opt_saved_searches tr').length < 2) {
@@ -371,10 +371,10 @@ var cp_saved_searches = {
 
 		if($(el).prop('checked') == true) {
 			$(el).next().html('Igen');
-			port.postMessage({ name : 'setWatchStatus', message : { index : $(el).closest('tr').index() - 1, status : true } });
+			self.postMessage({ name : 'setWatchStatus', message : { index : $(el).closest('tr').index() - 1, status : true } });
 		} else {
 			$(el).next().html('Nem');
-			port.postMessage({ name : 'setWatchStatus', message : { index : $(el).closest('tr').index() - 1, status : false } });
+			self.postMessage({ name : 'setWatchStatus', message : { index : $(el).closest('tr').index() - 1, status : false } });
 		}
 	}
 };

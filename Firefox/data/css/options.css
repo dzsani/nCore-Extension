@@ -42,12 +42,9 @@
 	margin: 0px;
 	padding-left: 10px;
 	border-bottom: 1px solid #6c6c6c;
-	background-image: -webkit-gradient(
-		linear,
-		left bottom,
-		left top,
-		color-stop(0.21, rgb(179,179,179)),
-		color-stop(0.61, rgb(231,231,231))
+	background-image:  -moz-linear-gradient(
+		rgb(231,231,231),
+		rgb(179,179,179)
 	);
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
@@ -188,11 +185,11 @@
 }
 
 .ncext_settings_page .button.on {
-	background-position-x: -40px;
+	background-position: -40px 0px;
 }
 
 .ncext_settings_page .button.off {
-	background-position-x: 0px;
+	background-position: 0px 0px;
 }
 
 .ncext_settings_page p.sub {

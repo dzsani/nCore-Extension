@@ -27,7 +27,7 @@ var torrent_list_auto_pager = {
 
 	scroll : function() {
 
-		var bottomHeight = $('body').height() - $('body').scrollTop() - $(window).height();
+		var bottomHeight = $('body').height() - $('html').scrollTop() - $(window).height();
 
 		if(
 			bottomHeight < 300 &&
@@ -191,6 +191,7 @@ var save_this_search = {
 
 		// Add click event to the save button
 		$('#ncext_save_this_search').click(function(e) {
+
 			e.preventDefault();
 			save_this_search.save();
 		});
@@ -228,10 +229,10 @@ var save_this_search = {
 		};
 
 		// Save to localStorage
-		port.postMessage({ name : "addSavedSearch", message : search });
+		self.postMessage({ name : "addSavedSearch", message : search });
 
 		// Update local dataStore object
-		port.postMessage({ name : "getSettings" });
+		self.postMessage({ name : "getSettings" });
 
 		// Update the list
 		setTimeout(function() {
@@ -329,7 +330,7 @@ function extInit() {
 	if(document.location.href.indexOf('torrents.php') != -1) {
 
 		// Settings
-		//cp.init(1);
+		cp.init(1);
 
 		if(dataStore['torrent_list_auto_pager'] == true) {
 			torrent_list_auto_pager.init();
@@ -345,11 +346,11 @@ function extInit() {
 
 	// FORUMS
 	} else if(document.location.href.indexOf('forum.php') != -1) {
-		//cp.init(2);
+		cp.init(2);
 
 	// Not found, show the settings button anyway
 	} else {
-		//cp.init(0);
+		cp.init(0);
 	}
 
 	// Shared
@@ -359,7 +360,12 @@ function extInit() {
 // Filter out iframes
 // Request settings object
 if(unsafeWindow.self == unsafeWindow.top) {
-	self.postMessage({ name : "getSettings" });
+
+	// Don't run the extension when
+	// a page worker checking the site
+	if(document.location.hash != '#ignore') {
+		self.postMessage({ name : "getSettings" });
+	}
 }
 
 self.on("message", function(event) {
