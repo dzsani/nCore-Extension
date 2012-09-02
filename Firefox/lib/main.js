@@ -211,7 +211,21 @@ var notifications = {
 			contentScriptFile: [self.data.url('js/jquery.js'), self.data.url('js/worker.js')],
 			contentScriptWhen: "ready",
 			onMessage: function(message) {
-				console.log(message);
+
+				// Update the obj
+				watchlist[index]['lastCheck'] = Math.round(new Date().getTime() / 1000);
+				watchlist[index]['lastId'] = message.lastId;
+
+				// Save the obj
+				ss.storage.saved_searches = JSON.stringify(watchlist);
+
+				// Start watching
+				notifications.intervals.push(
+					timer.setInterval(function() {
+						notifications.fetch(index);
+					}, 600000)
+				);
+
 			}
 		});
 	},
@@ -232,7 +246,22 @@ var notifications = {
 			contentScriptFile: [self.data.url('js/jquery.js'), self.data.url('js/worker.js')],
 			contentScriptWhen: "ready",
 			onMessage: function(message) {
-				console.log(message);
+
+				for(c = 0; c < message.results.length; c++) {
+
+					// Show notifications
+					notifications.notify({
+						title: "Új torrent!",
+						text: message.results[c]
+					});
+				}
+
+				// Update the obj
+				watchlist[index]['lastCheck'] = Math.round(new Date().getTime() / 1000);
+				watchlist[index]['lastId'] = lastId;
+
+				// Save the obj
+				ss.storage.saved_searches = JSON.stringify(watchlist);
 			}
 		});
 	}
