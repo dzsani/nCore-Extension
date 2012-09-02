@@ -8,7 +8,11 @@ Az nCore nemhivatalos Chrome bővítménye. Ez jelenleg egy work-in-progress pro
 * Mentett keresések, egyetlen kattintással előhozhatod a gyakran keresett tartalmakat
 * Mentett keresésekhez desktop figyelmeztetések, a bővítmény jelezni fogja neked ha új részt töltöttek fel a kedvenc sorozatodból még akkor is, ha böngésző nem fut
 
-# Telepítés
+# Stabil verzió letöltése
+
+* Chrome: https://chrome.google.com/webstore/detail/aihkkbdphimbonakckghefohdccdgopk
+
+# Fejlesztői verzió telepítése
 
 1. Töltsd le a teljes csomagot a főoldali ZIP gombra kattintva és csomagold ki egy helyre ahol megőrizheted!
 1. Nyisd meg a Chrome bővítmények aloldalát a Csavarkulcs -> Eszközök -> Bővítmények menüelemmel!
@@ -17,7 +21,7 @@ Az nCore nemhivatalos Chrome bővítménye. Ez jelenleg egy work-in-progress pro
 
 > Amint a bővítményből érdemes telepíthető csomagot készíteni, a GitHub letöltések alatt meg fogjátok találni.
 
-# Frissítés
+# Fejlesztői verzió frissítése
 
 1. Töltsd le újra az egész csomagot a főoldali ZIP gombbal és írd felül a régi mappát az új kitömörített verziójával!
 1. Nyisd meg a Chrome bővítmények aloldalát a Csavarkucsl -> Eszközök -> Bővítmények menüelemmel!
