@@ -49,7 +49,7 @@ var cp = {
 				html += '</div>';
 				html += '<div>';
 					html += '<h3>Keresőmező automatikus lenyitása</h3>';
-					html += '<p>Néhány téma, köztük az alapértelmezett elrejti a keresőmezőt és külön kattinttással lehet azt lenyitni. Ezzel az opcióval a keresőmező mindig nyitva marad.</p>';
+					html += '<p>Néhány téma - köztük az alapértelmezett - elrejti a keresőmezőt és külön kattinttással lehet azt lenyitni. Ezzel az opcióval a keresőmező mindig nyitva marad.</p>';
 					html += '<div class="button" id="show_search_bar"></div>';
 				html += '</div>';
 			html += '</div>';
