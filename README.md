@@ -7,6 +7,7 @@ Az nCore nemhivatalos Chrome bővítménye. Ez jelenleg egy work-in-progress pro
 * Képernyőképeknél előnézet mutatása ha az egérkurzort a kép fölé visszük
 * Mentett keresések, egyetlen kattintással előhozhatod a gyakran keresett tartalmakat
 * Mentett keresésekhez desktop figyelmeztetések, a bővítmény jelezni fogja neked ha új részt töltöttek fel a kedvenc sorozatodból még akkor is, ha böngésző nem fut
+* Keresőmező automatikus lenyitása
 
 # Stabil verzió letöltése
 
