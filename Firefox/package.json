@@ -1,0 +1,11 @@
+{
+	"id" : "ncore@kreaturamedia.com",
+	"version" : "1.0.1",
+	"name" : "ncore",
+	"fullName" : "nCore",
+	"description" : "An unofficial nCore extension for Firefox",
+	"homepage" : "https://github.com/dzsani/nCore-Extension",
+	"author" : "",
+	"icon" : "data/img/icons/icon48.png",
+	"license" : "MIT"
+}
