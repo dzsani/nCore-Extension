@@ -27,7 +27,7 @@ var torrent_list_auto_pager = {
 
 	scroll : function() {
 
-		var bottomHeight = $('body').height() - $('html').scrollTop() - $(window).height();
+		var bottomHeight = $(document).height() - $('html').scrollTop() - $(window).height();
 
 		if(
 			bottomHeight < 300 &&
