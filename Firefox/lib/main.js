@@ -19,7 +19,7 @@ var pageWorker = require("page-worker");
 var timer = require("timers");
 
 // Import notifications API for torrent watchlist
-var notifications = require("notifications");
+var notify = require("notifications");
 
 
 /******************************************************/
@@ -207,7 +207,7 @@ var notifications = {
 
 		// Create page worker to query the data
 		pageWorker.Page({
-			contentURL: "http://ncore.cc?notifications_add=1&"+obj['data']+"#ignore",
+			contentURL: "http://ncore.cc/torrents.php?notifications_add=true&"+obj['data']+"#ignore",
 			contentScriptFile: [self.data.url('js/jquery.js'), self.data.url('js/worker.js')],
 			contentScriptWhen: "ready",
 			onMessage: function(message) {
@@ -241,8 +241,8 @@ var notifications = {
 		var obj = watchlist[index];
 
 		// Create page worker to query the data
-		pageWorker.Page({
-			contentURL: "http://ncore.cc?notifications_fetch=1&"+obj['data']+"#ignore",
+		var worker = pageWorker.Page({
+			contentURL: "http://ncore.cc/torrents.php?notifications_fetch=true&lastId="+obj['lastId']+"&"+obj['data']+"#ignore",
 			contentScriptFile: [self.data.url('js/jquery.js'), self.data.url('js/worker.js')],
 			contentScriptWhen: "ready",
 			onMessage: function(message) {
@@ -250,7 +250,7 @@ var notifications = {
 				for(c = 0; c < message.results.length; c++) {
 
 					// Show notifications
-					notifications.notify({
+					notify.notify({
 						title: "Új torrent!",
 						text: message.results[c]
 					});
@@ -258,10 +258,13 @@ var notifications = {
 
 				// Update the obj
 				watchlist[index]['lastCheck'] = Math.round(new Date().getTime() / 1000);
-				watchlist[index]['lastId'] = lastId;
+				watchlist[index]['lastId'] = message.lastId;
 
 				// Save the obj
 				ss.storage.saved_searches = JSON.stringify(watchlist);
+
+				// Destroy the worker
+				worker.destroy();
 			}
 		});
 	}
