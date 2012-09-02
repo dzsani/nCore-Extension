@@ -47,6 +47,11 @@ var cp = {
 					html += '<p>Ha az egérkurzort a képernyőképek fölé viszed, a bővítmény azonnal megjeleníti a kép előnézetét kattintás nélkül.</p>';
 					html += '<div class="button" id="screenshot_preview"></div>';
 				html += '</div>';
+				html += '<div>';
+					html += '<h3>Keresőmező automatikus lenyitása</h3>';
+					html += '<p>Néhány téma, köztük az alapértelmezett elrejti a keresőmezőt és külön kattinttással lehet azt lenyitni. Ezzel az opcióval a keresőmező mindig nyitva marad.</p>';
+					html += '<div class="button" id="show_search_bar"></div>';
+				html += '</div>';
 			html += '</div>';
 
 			html += '<div class="ncext_settings_page">';

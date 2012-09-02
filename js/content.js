@@ -316,6 +316,14 @@ var save_this_search = {
 	}
 };
 
+var show_search_bar = {
+
+	init : function() {
+		$('#kategoriak').slideDown();
+		$('#panel_stuff').attr('class', 'panel_open');
+	}
+};
+
 function extInit() {
 
 	// TORRENTS
@@ -332,6 +340,9 @@ function extInit() {
 			screenshot_preview.init();
 		}
 
+		if(dataStore['show_search_bar'] == 'true') {
+			show_search_bar.init();
+		}
 
 	// FORUMS
 	} else if(document.location.href.indexOf('forum.php') != -1) {
