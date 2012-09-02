@@ -101,11 +101,6 @@ var notifications = {
 
 	restart : function() {
 
-		// Check login
-		if(localStorage['notification_username'] == '') {
-			return;
-		}
-
 		// Stop active invervals if any
 		if(notifications.intervals.length > 0) {
 			for(c = 0; c < notifications.intervals.length; c++) {
@@ -144,7 +139,7 @@ var notifications = {
 		var obj = watchlist[index];
 
 		// Query data
-		$.post('http://ncore.cc/torrents.php?'+obj['data']+'', { set_lang : 'hu', submitted : '1', nev : localStorage['notification_username'], pass : localStorage['notification_password'] }, function(data) {
+		$.post('http://ncore.cc/torrents.php?'+obj['data']+'', function(data) {
 
 			// Login check
 			var matches = data.match(/<title>(.*?)<\/title>/);
@@ -185,7 +180,7 @@ var notifications = {
 		var watchlist = JSON.parse(localStorage['saved_searches']);
 		var obj = watchlist[index];
 
-		$.post('http://ncore.cc/torrents.php?'+obj['data']+'', { set_lang : 'hu', submitted : '1', nev : localStorage['notification_username'], pass : localStorage['notification_password'] }, function(data) {
+		$.post('http://ncore.cc/torrents.php?'+obj['data']+'', function(data) {
 
 			// Login check
 			var matches = data.match(/<title>(.*?)<\/title>/);
