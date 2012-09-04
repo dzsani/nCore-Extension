@@ -195,7 +195,7 @@ var notifications = {
 		notifications.intervals.push(
 			timer.setInterval(function() {
 				notifications.fetch(index)
-			}, 600000)
+			}, 600000 + 10000 * index)
 		);
 	},
 

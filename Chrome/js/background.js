@@ -128,7 +128,7 @@ var notifications = {
 		notifications.intervals.push(
 			setInterval(function() {
 				notifications.fetch(index)
-			}, 600000)
+			}, 600000 + 10000 * index )
 		);
 	},
 
