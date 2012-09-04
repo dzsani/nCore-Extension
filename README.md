@@ -14,6 +14,7 @@ Firefox verzió készülőben van!
 # Stabil verzió letöltése
 
 * Chrome: https://chrome.google.com/webstore/detail/aihkkbdphimbonakckghefohdccdgopk
+* Firefox : https://addons.mozilla.org/en-US/firefox/addon/ncore/
 
 # Fejlesztői verzió telepítése
 
@@ -41,3 +42,7 @@ Firefox verzió készülőben van!
 
 * Írd felül a régi mappát!
 * https://addons.mozilla.org/en-US/developers/docs/sdk/latest/dev-guide/tutorials/getting-started-with-cfx.html
+
+# Imsert hibák
+
+* https://github.com/dzsani/nCore-Extension/issues
