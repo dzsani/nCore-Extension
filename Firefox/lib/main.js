@@ -252,7 +252,8 @@ var notifications = {
 					// Show notifications
 					notify.notify({
 						title: "Új torrent!",
-						text: message.results[c]
+						text: message.results[c],
+						iconURL : self.data.url('img/icons/icon48.png')
 					});
 				}
 
