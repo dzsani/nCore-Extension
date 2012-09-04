@@ -43,6 +43,6 @@ Firefox verzió készülőben van!
 * Írd felül a régi mappát!
 * https://addons.mozilla.org/en-US/developers/docs/sdk/latest/dev-guide/tutorials/getting-started-with-cfx.html
 
-# Imsert hibák
+# Ismert hibák
 
 * https://github.com/dzsani/nCore-Extension/issues
