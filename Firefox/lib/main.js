@@ -240,34 +240,40 @@ var notifications = {
 		var watchlist = JSON.parse(ss.storage.saved_searches);
 		var obj = watchlist[index];
 
-		// Create page worker to query the data
-		var worker = pageWorker.Page({
-			contentURL: "http://ncore.cc/torrents.php?notifications_fetch=true&lastId="+obj['lastId']+"&"+obj['data']+"#ignore",
-			contentScriptFile: [self.data.url('js/jquery.js'), self.data.url('js/worker.js')],
-			contentScriptWhen: "ready",
-			onMessage: function(message) {
+		setTimeout(function() {
 
-				for(c = 0; c < message.results.length; c++) {
+			// Create page worker to query the data
+			var worker = pageWorker.Page({
+				contentURL: "http://ncore.cc/torrents.php?notifications_fetch=true&lastId="+obj['lastId']+"&"+obj['data']+"#ignore",
+				contentScriptFile: [self.data.url('js/jquery.js'), self.data.url('js/worker.js')],
+				contentScriptWhen: "ready",
+				onMessage: function(message) {
 
-					// Show notifications
-					notify.notify({
-						title: "Új torrent!",
-						text: message.results[c],
-						iconURL : self.data.url('img/icons/icon48.png')
-					});
+					for(c = 0; c < message.results.length; c++) {
+
+						// Show notifications
+						notify.notify({
+							title: "Új torrent!",
+							text: message.results[c],
+							iconURL : self.data.url('img/icons/icon48.png')
+						});
+					}
+
+					// Get the most recent watchlist
+					watchlist = JSON.parse(ss.storage.saved_searches);
+
+					// Update the obj
+					watchlist[index]['lastCheck'] = Math.round(new Date().getTime() / 1000);
+					watchlist[index]['lastId'] = message.lastId;
+
+					// Save the obj
+					ss.storage.saved_searches = JSON.stringify(watchlist);
+
+					// Destroy the worker
+					worker.destroy();
 				}
-
-				// Update the obj
-				watchlist[index]['lastCheck'] = Math.round(new Date().getTime() / 1000);
-				watchlist[index]['lastId'] = message.lastId;
-
-				// Save the obj
-				ss.storage.saved_searches = JSON.stringify(watchlist);
-
-				// Destroy the worker
-				worker.destroy();
-			}
-		});
+			});
+		}, 2000 * (index + 1));
 	}
 };
 
