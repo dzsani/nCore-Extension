@@ -148,11 +148,11 @@ var notifications = {
 			var tmp = $(data);
 
 			// Check the element, get the last ID
-			if(tmp.find('.box_torrent:first').find('.torrent_txt a:first, .torrent_txt2 a:first').length < 1) {
-				var id = 0;
-			} else {
-				var id = tmp.find('.box_torrent:first').find('.torrent_txt a:first, .torrent_txt2 a:first').attr('onclick').match(/\d+/g)[0];
-			}
+			var id = tmp.find('.box_torrent:first').next().next().attr('id');
+
+
+			// NEED TO REMOVE !!!
+			console.log('add: ' + id);
 
 			// Update the obj
 			watchlist[index]['lastCheck'] = Math.round(new Date().getTime() / 1000);
@@ -208,6 +208,9 @@ var notifications = {
 				start = 1;
 			}
 
+			// NEED TO REMOVE !!!
+			console.log('start: ' + start);
+
 			// Get all new elements and show notification
 			wrapper.find('.box_torrent:lt('+start+')').each(function() {
 
@@ -226,7 +229,10 @@ var notifications = {
 			});
 
 			// Get lat torrent ID
-			var id = wrapper.find('.box_torrent:first').find('.torrent_txt a:first, .torrent_txt2 a:first').attr('onclick').match(/\d+/g);
+			var id = wrapper.find('.box_torrent:first').next().next().attr('id');
+
+			// NEED TO REMOVE !!!
+			console.log('lastId: ' + id);
 
 			// Update the obj
 			watchlist[index]['lastCheck'] = Math.round(new Date().getTime() / 1000);

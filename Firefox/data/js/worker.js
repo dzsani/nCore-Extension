@@ -1,12 +1,9 @@
 // ADD
 if(document.location.href.indexOf('notifications_add') != -1) {
 
-	// Check the element, get the last ID
-	if($('.box_torrent:first').find('.torrent_txt a:first, .torrent_txt2 a:first').length < 1) {
-		var id = 0;
-	} else {
-		var id = $('.box_torrent:first').find('.torrent_txt a:first, .torrent_txt2 a:first').attr('onclick').match(/\d+/g)[0];
-	}
+	// Get the last id
+	var id = $('.box_torrent:first').next().next().attr('id');
+
 
 	self.postMessage({ lastId : id });
 
@@ -44,7 +41,7 @@ if(document.location.href.indexOf('notifications_add') != -1) {
 		});
 
 		// Get lat torrent ID
-		var id = $('.box_torrent:first').find('.torrent_txt a:first, .torrent_txt2 a:first').attr('onclick').match(/\d+/g)[0];
+		var id = $('.box_torrent:first').next().next().attr('id');
 
 		// Send data
 		self.postMessage({ lastId : id, results : results });
