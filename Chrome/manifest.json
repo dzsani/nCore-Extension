@@ -1,6 +1,6 @@
 {
   "name" : "nCore",
-  "version" : "1.0.2",
+  "version" : "1.0.3",
   "manifest_version" : 2,
   "description" : "An unofficial Chrome extension for nCore.",
   "icons": {
