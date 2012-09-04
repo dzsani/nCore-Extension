@@ -3,7 +3,7 @@ if( typeof localStorage['torrent_list_auto_pager']		== 'undefined') localStorage
 if( typeof localStorage['screenshot_preview'] 			== 'undefined') localStorage['screenshot_preview'] 		= 'true';
 if( typeof localStorage['saved_searches'] 				== 'undefined') localStorage['saved_searches'] 			= '[]';
 if( typeof localStorage['show_search_bar'] 				== 'undefined') localStorage['show_search_bar'] 		= 'true';
-
+console.log(localStorage['saved_searches']);
 chrome.extension.onConnect.addListener(function(port) {
 	port.onMessage.addListener(function(event) {
 
@@ -128,7 +128,7 @@ var notifications = {
 		notifications.intervals.push(
 			setInterval(function() {
 				notifications.fetch(index)
-			}, 600000 + 10000 * index )
+			}, 600000)
 		);
 	},
 
@@ -176,75 +176,87 @@ var notifications = {
 
 	fetch : function(index) {
 
-		// Get the object
-		var watchlist = JSON.parse(localStorage['saved_searches']);
-		var obj = watchlist[index];
+		setTimeout(function() {
 
-		$.post('http://ncore.cc/torrents.php?'+obj['data']+'', function(data) {
+			// Get the object
+			var watchlist = JSON.parse(localStorage['saved_searches']);
+			var obj = watchlist[index];
 
-			// Login check
-			var matches = data.match(/<title>(.*?)<\/title>/);
+			$.post('http://ncore.cc/torrents.php?'+obj['data']+'', function(data) {
 
-			if(matches[1] == 'nCore') {
-				return;
-			}
+				// Login check
+				var matches = data.match(/<title>(.*?)<\/title>/);
 
-			// Parse the response
-			var tmp = $(data);
+				if(matches[1] == 'nCore') {
+					return;
+				}
 
-			// Create new temp wrapper
-			var wrapper = $('<div>').appendTo('#temp');
+				// Parse the response
+				var tmp = $(data);
 
-			// Insert temporary to the backhround page
-			tmp.find('.box_torrent_all:first').children().each(function() {
-				$(this).appendTo(wrapper);
+				// Create new temp wrapper
+				var wrapper = $('<div>').appendTo('#temp');
+
+				// Insert temporary to the backhround page
+				tmp.find('.box_torrent_all:first').children().each(function() {
+					$(this).appendTo(wrapper);
+				});
+
+				// DEBUG: original last id
+				console.log('fetch_orig_id', obj['lastId']);
+
+				// Find the old element
+				var start = wrapper.find('#'+obj['lastId']+'').prev().prev().index('.box_torrent');
+
+				// DEBUG: index if the elment is find
+				console.log('fetch_find', start);
+
+				// If the old element not found, get the first one
+				if(wrapper.find('#'+obj['lastId']+'').length < 1) {
+					start = 1;
+				}
+
+				// DEBUG: start index
+				console.log('start: ' + start);
+
+				// Get all new elements and show notification
+				wrapper.find('.box_torrent:lt('+start+')').each(function() {
+
+					// Get torrent name
+					var name = $(this).find('.torrent_txt a:first, .torrent_txt2 a:first').attr('title');
+
+					// Build notification
+					var notification = webkitNotifications.createNotification(
+						'/img/icons/icon48.png',  // icon
+						'Új torrent!',  // title
+						name  // text
+					);
+
+					// Show the notification
+					notification.show();
+				});
+
+				// Get lat torrent ID
+				var id = wrapper.find('.box_torrent:first').next().next().attr('id');
+
+				// DEBUG: last id
+				console.log('lastId: ' + id);
+
+				// Get the most recent watchlist
+				watchlist = JSON.parse(localStorage['saved_searches']);
+
+				// Update the obj
+				watchlist[index]['lastCheck'] = Math.round(new Date().getTime() / 1000);
+				watchlist[index]['lastId'] = id;
+
+				// Save the obj
+				localStorage['saved_searches'] = JSON.stringify(watchlist);
+
+				// Remove temporary element
+				wrapper.remove();
+
 			});
-
-			// Find the old element
-			var start = wrapper.find('#'+obj['lastId']+'').prev().prev().index('.box_torrent');
-
-			// If the old element not found, get the first one
-			if(wrapper.find('#'+obj['lastId']+'').length < 1) {
-				start = 1;
-			}
-
-			// NEED TO REMOVE !!!
-			console.log('start: ' + start);
-
-			// Get all new elements and show notification
-			wrapper.find('.box_torrent:lt('+start+')').each(function() {
-
-				// Get torrent name
-				var name = $(this).find('.torrent_txt a:first, .torrent_txt2 a:first').attr('title');
-
-				// Build notification
-				var notification = webkitNotifications.createNotification(
-					'/img/icons/icon48.png',  // icon
-					'Új torrent!',  // title
-					name  // text
-				);
-
-				// Show the notification
-				notification.show();
-			});
-
-			// Get lat torrent ID
-			var id = wrapper.find('.box_torrent:first').next().next().attr('id');
-
-			// NEED TO REMOVE !!!
-			console.log('lastId: ' + id);
-
-			// Update the obj
-			watchlist[index]['lastCheck'] = Math.round(new Date().getTime() / 1000);
-			watchlist[index]['lastId'] = id[0];
-
-			// Save the obj
-			localStorage['saved_searches'] = JSON.stringify(watchlist);
-
-			// Remove temporary element
-			wrapper.remove();
-
-		});
+		}, 2000 * (index + 1));
 	}
 };
 
