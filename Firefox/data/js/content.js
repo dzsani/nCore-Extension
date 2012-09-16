@@ -324,6 +324,17 @@ var show_search_bar = {
 	}
 };
 
+var disable_card_ads = {
+
+	init : function() {
+		$('div[id*="card_box_main"]:first').css('display', 'none');
+	},
+
+	destroy : function() {
+		$('div[id*="card_box_main"]:first').css('display', 'block');
+	}
+};
+
 function extInit() {
 
 	// TORRENTS
@@ -355,6 +366,11 @@ function extInit() {
 
 	// Shared
 	save_this_search.init();
+
+	// Disable card ads
+	if(dataStore['disable_card_ads'] == true) {
+		disable_card_ads.init();
+	}
 }
 
 // Filter out iframes

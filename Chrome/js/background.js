@@ -3,7 +3,8 @@ if( typeof localStorage['torrent_list_auto_pager']		== 'undefined') localStorage
 if( typeof localStorage['screenshot_preview'] 			== 'undefined') localStorage['screenshot_preview'] 		= 'true';
 if( typeof localStorage['saved_searches'] 				== 'undefined') localStorage['saved_searches'] 			= '[]';
 if( typeof localStorage['show_search_bar'] 				== 'undefined') localStorage['show_search_bar'] 		= 'true';
-console.log(localStorage['saved_searches']);
+if( typeof localStorage['disable_card_ads'] 			== 'undefined') localStorage['disable_card_ads'] 		= 'true';
+
 chrome.extension.onConnect.addListener(function(port) {
 	port.onMessage.addListener(function(event) {
 

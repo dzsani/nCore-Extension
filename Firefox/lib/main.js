@@ -38,6 +38,9 @@ if(typeof ss.storage.saved_searches == "undefined")
 if(typeof ss.storage.show_search_bar == "undefined")
 	ss.storage.show_search_bar = true;
 
+if(typeof ss.storage.disable_card_ads == "undefined")
+	ss.storage.disable_card_ads = true;
+
 /******************************************************/
 /*                    E V E N T S                     */
 /******************************************************/

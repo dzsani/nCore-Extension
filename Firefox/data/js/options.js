@@ -58,7 +58,11 @@ var cp = {
 				html += 'HAMAROSAN!';
 			html += '</div>';
 			html += '<div class="ncext_settings_page">';
-				html += 'HAMAROSAN!';
+				html += '<div>';
+					html += '<h3>Becsúszó hirdetések blokkolása</h3>';
+					html += '<p>Ezzel a funkcióval blokkolhatod az oldal aljára érve becsúszó [origo] hirdetéseket</p>';
+					html += '<div class="button" id="disable_card_ads"></div>';
+				html += '</div>';
 			html += '</div>';
 			html += '<div class="ncext_settings_page" id="ncext_opt_notifications">';
 				html += '<h3>A figyelmeztetésekről</h3>';
