@@ -373,7 +373,7 @@ var show_covers = {
 				var cover = $('<div>').insertAfter(icon).addClass('ncext_cover');
 
 				// Get cover URL
-				var url = $(this).find('.infobar img').attr('onmouseover').match(/mutat\('(.*?)'\, '(.*?)'\, '(.*?)'\, (.*?)\)/);
+				var url = $(this).find('.infobar img').attr('onmouseover').match(/'(.*?)'/);
 					url = url[1];
 
 				// Create image
