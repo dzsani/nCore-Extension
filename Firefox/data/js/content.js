@@ -62,6 +62,11 @@ var torrent_list_auto_pager = {
 			torrent_list_auto_pager.progress = false;
 			torrent_list_auto_pager.currPage++;
 			torrent_list_auto_pager.counter++;
+
+			// Re-init
+			if(dataStore['show_covers'] == 'true') {
+				show_covers.init();
+			}
 		});
 	},
 
@@ -335,6 +340,82 @@ var disable_card_ads = {
 	}
 };
 
+
+var show_covers = {
+
+	init : function() {
+
+		$('.box_torrent:not(.cover_check)').each(function() {
+
+			// Exclude from re-searches
+			$(this).addClass('cover_check');
+
+			// Set sizes
+			$(this).children().css('height', 51);
+
+			// Set children style
+			$(this).find('.box_nagy, .box_nagy2').children().each(function() {
+				$(this).css('margin-top', parseInt($(this).css('margin-top')) + 10);
+			});
+
+			$(this).find('.box_alap_img img').css('margin-top', 10);
+
+			// Find cover
+			if($(this).find('.infobar').length > 0) {
+
+				// Find category icon
+				var icon = $(this).find('.box_alap_img img');
+
+				// Hide category icon
+				icon.hide();
+
+				// Create replacement
+				var cover = $('<div>').insertAfter(icon).addClass('ncext_cover');
+
+				// Get cover URL
+				var url = $(this).find('.infobar img').attr('onmouseover').match(/mutat\('(.*?)'\, '(.*?)'\, '(.*?)'\, (.*?)\)/);
+					url = url[1];
+
+				// Create image
+				var img = $('<img>').load(function() {
+					show_covers.load(this);
+				}).attr('src', url).appendTo(cover);
+
+			}
+
+		});
+	},
+
+	load : function(el) {
+
+		// Calc position
+		var top = $(el).height() / 2 - $(el).parent().height() / 2;
+
+		// Position the image
+		$(el).css('margin-top', -top);
+	},
+
+	destroy : function() {
+
+		// Show the original icon and remove cover
+		$('.ncext_cover').prev().show().next().remove();
+
+		// Remove style settings
+		$('.box_torrent .box_nagy, .box_torrent .box_nagy2').children().each(function() {
+			$(this).css('margin-top', parseInt($(this).css('margin-top')) - 10);
+		});
+
+		$('.box_torrent .box_alap_img img').css('margin-top', 0);
+
+		$('.box_torrent').children().css('height', 32);
+
+		// Remove checked class
+		$('.cover_check').removeClass('cover_check');
+	}
+};
+
+
+
 function extInit() {
 
 	// TORRENTS
@@ -353,6 +434,10 @@ function extInit() {
 
 		if(dataStore['show_search_bar'] == true) {
 			show_search_bar.init();
+		}
+
+		if(dataStore['show_covers'] == true) {
+			show_covers.init();
 		}
 
 	// FORUMS

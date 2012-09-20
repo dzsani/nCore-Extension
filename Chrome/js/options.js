@@ -52,6 +52,11 @@ var cp = {
 					html += '<p>Néhány téma - köztük az alapértelmezett - elrejti a keresőmezőt és külön kattinttással lehet azt lenyitni. Ezzel az opcióval a keresőmező mindig nyitva marad.</p>';
 					html += '<div class="button" id="show_search_bar"></div>';
 				html += '</div>';
+				html += '<div>';
+					html += '<h3>Borítóképek mutatása</h3>';
+					html += '<p>A kategóriaképek helyett a mű borítója fog megjelenni.</p>';
+					html += '<div class="button" id="show_covers"></div>';
+				html += '</div>';
 			html += '</div>';
 
 			html += '<div class="ncext_settings_page">';
