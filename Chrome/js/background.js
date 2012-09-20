@@ -4,7 +4,7 @@ if( typeof localStorage['screenshot_preview'] 			== 'undefined') localStorage['s
 if( typeof localStorage['saved_searches'] 				== 'undefined') localStorage['saved_searches'] 			= '[]';
 if( typeof localStorage['show_search_bar'] 				== 'undefined') localStorage['show_search_bar'] 		= 'true';
 if( typeof localStorage['disable_card_ads'] 			== 'undefined') localStorage['disable_card_ads'] 		= 'true';
-if( typeof localStorage['show_covers'] 					== 'undefined') localStorage['show_covers'] 			= 'true';
+if( typeof localStorage['show_covers'] 					== 'undefined') localStorage['show_covers'] 			= 'false';
 
 chrome.extension.onConnect.addListener(function(port) {
 	port.onMessage.addListener(function(event) {

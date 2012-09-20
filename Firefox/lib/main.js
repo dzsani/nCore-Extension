@@ -42,7 +42,7 @@ if(typeof ss.storage.disable_card_ads == "undefined")
 	ss.storage.disable_card_ads = true;
 
 if(typeof ss.storage.show_covers == "undefined")
-	ss.storage.show_covers = true;
+	ss.storage.show_covers = false;
 
 /******************************************************/
 /*                    E V E N T S                     */
