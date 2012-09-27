@@ -352,9 +352,9 @@ var cp_saved_searches = {
 
 			// Generate the row
 			var item = $('<tr>').appendTo('#ncext_opt_saved_searches');
-			$('<td>').html( list[c]['keywords'] ).appendTo(item);
-			$('<td>').html( list[c]['categories'].join(',') ).appendTo(item);
-			$('<td>').html( list[c]['subcategories'].join(',') ).appendTo(item);
+			$('<td>').text( list[c]['keywords'] ).appendTo(item);
+			$('<td>').text( list[c]['categories'].join(',') ).appendTo(item);
+			$('<td>').text( list[c]['subcategories'].join(',') ).appendTo(item);
 			$('<td>').html('<label><input type="checkbox"><span>Nem</span></label>').appendTo(item);
 
 			if(list[c]['watch'] == true) {
@@ -398,10 +398,10 @@ var cp_saved_searches = {
 	watch : function(el) {
 
 		if($(el).prop('checked') == true) {
-			$(el).next().html('Igen');
+			$(el).next().text('Igen');
 			port.postMessage({ name : 'setWatchStatus', message : { index : $(el).closest('tr').index() - 1, status : true } });
 		} else {
-			$(el).next().html('Nem');
+			$(el).next().text('Nem');
 			port.postMessage({ name : 'setWatchStatus', message : { index : $(el).closest('tr').index() - 1, status : false } });
 		}
 	}
