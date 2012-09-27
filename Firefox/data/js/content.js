@@ -64,7 +64,7 @@ var torrent_list_auto_pager = {
 			torrent_list_auto_pager.counter++;
 
 			// Re-init
-			if(dataStore['show_covers'] == 'true') {
+			if(dataStore['show_covers'] == true) {
 				show_covers.init();
 			}
 		});

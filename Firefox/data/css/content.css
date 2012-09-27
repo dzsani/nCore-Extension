@@ -109,3 +109,14 @@
 	background-color: transparent !important;
 	cursor: default !important;
 }
+
+/* COVERS */
+.ncext_cover {
+	width: 51px;
+	height: 51px;
+	overflow: hidden;
+}
+
+.ncext_cover img {
+	width: 100%;
+}
