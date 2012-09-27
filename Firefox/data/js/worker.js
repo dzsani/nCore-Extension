@@ -30,7 +30,7 @@ if(document.location.href.indexOf('notifications_add') != -1) {
 
 		// If the old element not found, get the first one
 		if($('#'+lastId+'').length < 1) {
-			start = 1;
+			start = 0;
 		}
 
 		// Get all new elements and show notification

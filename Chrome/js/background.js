@@ -215,7 +215,7 @@ var notifications = {
 
 				// If the old element not found, get the first one
 				if(wrapper.find('#'+obj['lastId']+'').length < 1) {
-					start = 1;
+					start = 0;
 				}
 
 				// DEBUG: start index
