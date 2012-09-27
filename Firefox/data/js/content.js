@@ -49,7 +49,7 @@ var torrent_list_auto_pager = {
 		$.get(url, function(data) {
 
 			// Insert page marker
-			$('<div>').appendTo('.box_torrent_all').addClass('ncext_page_marker').html( torrent_list_auto_pager.currPage+1 +'. oldal');
+			$('<div>').appendTo('.box_torrent_all').addClass('ncext_page_marker').text( torrent_list_auto_pager.currPage+1 +'. oldal');
 
 			// Parse response
 			var tmp = $(data);
@@ -192,7 +192,8 @@ var save_this_search = {
 	init : function() {
 
 		// Create the save button
-		$('<a>').attr('href', '#').attr('id', 'ncext_save_this_search').html('[keresés mentése]').appendTo('#keresoresz tr:eq(2) td:eq(4)');
+		$('#keresoresz tr:eq(2) td:eq(4)').append( $('<a>', { href : '#', id : 'ncext_save_this_search', text : '[keresés mentése]' }) );
+
 
 		// Add click event to the save button
 		$('#ncext_save_this_search').click(function(e) {
@@ -267,27 +268,32 @@ var save_this_search = {
 		$('#ncext_saved_searches').remove();
 
 		// Create the list
-		$('<div><h5>Keresések</h5><div id="ncext_saved_searches_list"><table><tr><th>Kulcsszavak</th><th>Kategoriak</th><th>Alkategóriák</th></tr></table></div></div>').attr('id', 'ncext_saved_searches').appendTo('body');
+		$('body').append( $('<div>', { id : 'ncext_saved_searches' } )
+			.append( $('<h5>', { text : 'Keresések' } )
+				.after( $('<div>', { id : 'ncext_saved_searches_list' } )
+					.append( $('<table>')
+						.append( $('<tr>')
+							.append( $('<th>', { text : 'Kulcsszavak' } )
+							.after( $('<th>', { text : 'Kategoriak' } )
+							.after( $('<th>', { text : 'Alkategóriák' } ))))
+						)
+					)
+				)
+			)
+		);
 
-		// Add click event
-		$('#ncext_saved_searches h5').toggle(
+		// Add hover event
+		$('#ncext_saved_searches').hover(
 			function() {
-				$(this).css({ opacity : 1 });
-				$(this).parent().animate({ right : 0 });
-				$('<div>').attr('id', 'ncext_saved_searches_overlay').appendTo('body');
+				$(this).stop().animate({ opacity : 1, right : 0 }, 300);
+				$('body').append( $('<div>', { id : 'ncext_saved_searches_overlay' }) );
 			},
 
 			function() {
-				$(this).removeAttr('style');
-				$(this).parent().animate({ right : -530 });
+				$(this).stop().animate({ opacity: 0.5, right : -530 }, 300);
 				$('#ncext_saved_searches_overlay').remove();
 			}
 		);
-
-		// Add overlay live click event
-		$('#ncext_saved_searches_overlay').die('click').live('click', function() {
-			$('#ncext_saved_searches h5').click();
-		});
 
 
 		// Build the new list
@@ -295,9 +301,9 @@ var save_this_search = {
 
 			// Generate the row
 			var item = $('<tr>').appendTo('#ncext_saved_searches table');
-			$('<td>').html( list[c]['keywords'] ).appendTo(item);
-			$('<td>').html( list[c]['categories'].join(',') ).appendTo(item);
-			$('<td>').html( list[c]['subcategories'].join(',') ).appendTo(item);
+			$('<td>').text( list[c]['keywords'] ).appendTo(item);
+			$('<td>').text( list[c]['categories'].join(',') ).appendTo(item);
+			$('<td>').text( list[c]['subcategories'].join(',') ).appendTo(item);
 
 			// Add click event
 			$(item).click(function() {

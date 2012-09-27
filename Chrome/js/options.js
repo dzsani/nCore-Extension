@@ -3,10 +3,13 @@ var cp = {
 	init : function(page) {
 
 		// Create the settings button
-		$('<div id="ncext_settings_button"><img src="'+chrome.extension.getURL('/img/settings/icon.png')+'" alt=""></div>').appendTo('body');
+		$('body').append( $('<div>',  { id : 'ncext_settings_button'} )
+			.append( $('<img>', { src : chrome.extension.getURL('/img/settings/icon.png') }) )
+		);
+
 
 		// Create the hiding overlay
-		$('<div id="ncext_settings_hide_overlay"></div>').appendTo('body');
+		$('body').append( $('<div>', { id : 'ncext_settings_hide_overlay' } ) );
 
 		// Create click event for settings pane
 		$('#ncext_settings_button').click(function() {
@@ -18,75 +21,82 @@ var cp = {
 			}
 		});
 
-		// Inject the html code
-		var html = '';
+		// Inject the settings html code
 
-		html += '<div id="ncext_settings_wrapper">';
-			html += '<ul id="ncext_settings_header">';
-				html += '<li>Névjegy</li>';
-				html += '<li>Torrentek</li>';
-				html += '<li>Fórum</li>';
-				html += '<li>Egyéb</li>';
-				html += '<li>Keresések</li>';
-			html += '</ul>';
+		// Settings navigation bar
+		$('body').append( $('<div>', { id : 'ncext_settings_wrapper'} )
+			.append( $('<ul>', { id : 'ncext_settings_header' } )
+				.append( $('<li>', { text : 'Névjegy' })
+				.after( $('<li>', { text : 'Torrentek' })
+				.after( $('<li>', { text : 'Fórum' })
+				.after( $('<li>', { text : 'Egyéb' })
+				.after( $('<li>', { text : 'Keresése' }) ))))))
 
-			html += '<div class="ncext_settings_page">';
-				html += '<h3>nCore</h3>';
-				html += '<p>Verzió: 1.0.3<br></p>';
-				html += '<p>Kiadás dátuma: 2012. 09. 04.</p>';
-			html += '</div>';
+			// Page: About
+			.append( $('<div>', { class : 'ncext_settings_page' })
+				.append( $('<h3>', { text : 'nCore' } ) )
+				.append( $('<p>', { text : 'Verzió: 1.0.3' } ) )
+				.append( $('<p>', { text : 'Kiadás dátuma: 2012. 09. 04.' }))
+			)
 
-			html += '<div class="ncext_settings_page">';
-				html += '<div>';
-					html += '<h3>Következő oldal automatikus betöltése a lap aljára érve</h3>';
-					html += '<p>Ezzel az opcióval soha nem kell manuálisan lapoznod, ahogy a lap aljára érkezel, a bővítmény előtölti a következő oldal tartalmát és azonnal beilleszti azt elnavigálás nélkül</p>';
-					html += '<div class="button" id="torrent_list_auto_pager"></div>';
-				html += '</div>';
-				html += '<div>';
-					html += '<h3>Képernyőképek előnézetének mutatása</h3>';
-					html += '<p>Ha az egérkurzort a képernyőképek fölé viszed, a bővítmény azonnal megjeleníti a kép előnézetét kattintás nélkül.</p>';
-					html += '<div class="button" id="screenshot_preview"></div>';
-				html += '</div>';
-				html += '<div>';
-					html += '<h3>Keresőmező automatikus lenyitása</h3>';
-					html += '<p>Néhány téma - köztük az alapértelmezett - elrejti a keresőmezőt és külön kattinttással lehet azt lenyitni. Ezzel az opcióval a keresőmező mindig nyitva marad.</p>';
-					html += '<div class="button" id="show_search_bar"></div>';
-				html += '</div>';
-				html += '<div>';
-					html += '<h3>Borítóképek mutatása</h3>';
-					html += '<p>A kategóriaképek helyett a mű borítója fog megjelenni.</p>';
-					html += '<div class="button" id="show_covers"></div>';
-				html += '</div>';
-			html += '</div>';
+			// Page: Torrents
+			.append( $('<div>', { class : 'ncext_settings_page' })
+				.append( $('<div>')
+					.append( $('<h3>', { text : 'Következő oldal automatikus betöltése a lap aljára érve' } ))
+					.append( $('<p>', { text : 'Ezzel az opcióval soha nem kell manuálisan lapoznod, ahogy a lap aljára érkezel, a bővítmény előtölti a következő oldal tartalmát és azonnal beilleszti azt elnavigálás nélkül' } ))
+					.append( $('<div>', { class : 'button', id : 'torrent_list_auto_pager' } ))
+				)
+				.append( $('<div>')
+					.append( $('<h3>', { text : 'Képernyőképek előnézetének mutatása' } ))
+					.append( $('<p>', { text : 'Ha az egérkurzort a képernyőképek fölé viszed, a bővítmény azonnal megjeleníti a kép előnézetét kattintás nélkül.' } ))
+					.append( $('<div>', { class : 'button', id : 'screenshot_preview' } ))
+				)
+				.append( $('<div>')
+					.append( $('<h3>', { text : 'Keresőmező automatikus lenyitása' } ))
+					.append( $('<p>', { text : 'Néhány téma - köztük az alapértelmezett - elrejti a keresőmezőt és külön kattinttással lehet azt lenyitni. Ezzel az opcióval a keresőmező mindig nyitva marad.' } ))
+					.append( $('<div>', { class : 'button', id : 'show_search_bar' } ))
+				)
+				.append( $('<div>')
+					.append( $('<h3>', { text : 'Borítóképek mutatása' } ))
+					.append( $('<p>', { text : 'A kategóriaképek helyett a mű borítója fog megjelenni.' } ))
+					.append( $('<div>', { class : 'button', id : 'show_covers' } ))
+				)
+			)
 
-			html += '<div class="ncext_settings_page">';
-				html += 'HAMAROSAN';
-			html += '</div>';
-			html += '<div class="ncext_settings_page">';
-				html += '<div>';
-					html += '<h3>Becsúszó hirdetések blokkolása</h3>';
-					html += '<p>Ezzel a funkcióval blokkolhatod az oldal aljára érve becsúszó [origo] hirdetéseket</p>';
-					html += '<div class="button" id="disable_card_ads"></div>';
-				html += '</div>';
-			html += '</div>';
-			html += '<div class="ncext_settings_page" id="ncext_opt_notifications">';
-				html += '<h3>A figyelmeztetésekről</h3>';
-				html += '<p>A mentett kereséseknél lehetőség van figyelmeztetéseket kérni, a bővítmény automatikusan ellenőrzi bizonyos időközönként a feltöltött torrenteket és desktop figyelmeztetést fog küldeni neked ha például a kedvenc sorozathoz feltöltöttek egy új részt! Ez a funkció akkor is működik, ha a böngésző el sincs indítva. <br><br><strong>FONTOS:</strong> ez a funkció csak akkor működik, ha belépésnél a csökkentett biztonságot választottad!</p>';
-				html += '<table id="ncext_opt_saved_searches">';
-					html += '<tr>';
-						html += '<th>Kulcsszavak</th>';
-						html += '<th>Kategóriák</th>';
-						html += '<th>Alkategóriák</th>';
-						html += '<th>Figyelmeztetés</th>';
-						html += '<th>Törlés</th>';
-					html += '</tr>';
-				html += '</table>';
-			html += '</div>';
-		html += '</div>';
+			// Page: Forums
+			.append( $('<div>', { class : 'ncext_settings_page' } )
+				.append( $('<p>', { text : 'HAMAROSAN!' } ))
+			)
+
+			// Page: Experiments
+			.append( $('<div>', { class : 'ncext_settings_page' } )
+				.append( $('<div>')
+					.append( $('<h3>', { text : 'Becsúszó hirdetések blokkolása' } ))
+					.append( $('<p>', { text : 'Ezzel a funkcióval blokkolhatod az oldal aljára érve becsúszó [origo] hirdetéseket.' } ))
+					.append( $('<div>', { class : 'button', id : 'disable_card_ads' } ))
+				)
+			)
+
+			// Page: Searches
+			.append( $('<div>', { class : 'ncext_settings_page' } )
+				.append( $('<h3>', { text : 'A figyelmeztetésekről' } )
+				.after( $('<p>', { html : 'A mentett kereséseknél lehetőség van figyelmeztetéseket kérni, a bővítmény automatikusan ellenőrzi bizonyos időközönként a feltöltött torrenteket és desktop figyelmeztetést fog küldeni neked ha például a kedvenc sorozathoz feltöltöttek egy új részt! Ez a funkció akkor is működik, ha a böngésző el sincs indítva. <br><br><strong>FONTOS:</strong> ez a funkció csak akkor működik, ha belépésnél a csökkentett biztonságot választottad!' } )
+				.after( $('<table>', { id : 'ncext_opt_saved_searches' } )
+					.append( $('<tr>')
+						.append( $('<th>', { text : 'Kulcsszavak' } ))
+						.append( $('<th>', { text : 'Kategóriák' } ))
+						.append( $('<th>', { text : 'Alkategóriák' } ))
+						.append( $('<th>', { text : 'Figyelmeztetés' } ))
+						.append( $('<th>', { text : 'Törlés' } ))
+					)
+				)))
+			)
+		);
+
 
 
 		// Append settings pane html to body
-		$(html).appendTo('body');
+		//$(html).appendTo('body');
 
 		// Set header list backgrounds
 		$('#ncext_settings_header li').css({ 'background-image' : 'url('+chrome.extension.getURL('/img/settings/icons.png')+')' });
@@ -328,7 +338,9 @@ var cp_saved_searches = {
 
 		// Do nothing when the list is empty
 		if(list.length < 1) {
-			$('<tr><td colspan="5">Jelenleg még nem mentettél el egyetlen keresést sem!</td></tr>').appendTo('#ncext_opt_saved_searches');
+			$('#ncext_opt_saved_searches').append( $('<tr>')
+				.append( $('<td>', { colspan : '5', text : 'Jelenleg még nem mentettél el egyetlen keresést sem!' } ))
+			);
 			return;
 		}
 
@@ -349,7 +361,12 @@ var cp_saved_searches = {
 				$(item).find(':checkbox').prop('checked', true);
 				$(item).find('span').html('Igen');
 			}
-			$('<td><a href="#" title="Törlés"><img src="'+chrome.extension.getURL('/img/settings/remove.png')+'" alt="Törlés"></a></td>').appendTo(item);
+
+			$(item).append( $('<td>')
+				.append( $('<a>', { href : '#', title : 'Törlés' } )
+					.append( $('<img>', { src : chrome.extension.getURL('/img/settings/remove.png'), alt : 'Törlés' }))
+				)
+			);
 		}
 	},
 
@@ -372,7 +389,9 @@ var cp_saved_searches = {
 
 		// Check content
 		if( $('#ncext_opt_saved_searches tr').length < 2) {
-			$('<tr><td colspan="5">Jelenleg még nem mentettél el egyetlen keresést sem!</td></tr>').appendTo('#ncext_opt_saved_searches');
+			$('#ncext_opt_saved_searches').append( $('<tr>')
+				.append( $('<td>', { colspan : '5', text : 'Jelenleg még nem mentettél el egyetlen keresést sem!' }))
+			);
 		}
 	},
 
