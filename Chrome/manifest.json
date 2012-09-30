@@ -12,7 +12,8 @@
   "permissions" : [
     "background",
     "notifications",
-    "http://ncore.cc/*"
+    "http://ncore.cc/*",
+    "http://www.feliratok.info/*"
   ],
 
   "background" : {

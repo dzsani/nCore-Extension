@@ -420,6 +420,203 @@ var show_covers = {
 };
 
 
+var find_subtitles = {
+
+	init : function() {
+
+		// Place find text when the use click on a torreent
+		$('.box_torrent:not(.ncext_subtitle_check)').find('.torrent_txt a, .box_torrent .torrent_txt2 a').live('click', function() {
+			$(this).closest('.box_torrent').addClass('ncext_subtitle_check');
+			find_subtitles.appendText(this);
+		});
+
+		// Find subtitle
+		$('.ncext_subtitle_link').die('click').live('click', function(e) {
+			e.preventDefault();
+			find_subtitles.search(this);
+		});
+
+		// Close overlay
+		$('#ncext_subtitle_overlay').die('click').live('click', function() {
+			$('#ncext_subtitle_results').animate({ left: '110%', marginLeft : 0 }, 300, function() {
+				$(this).remove();
+				$('#ncext_subtitle_overlay').animate({ opacity : 0 }, 100, function() {
+					$(this).remove();
+				});
+
+			})
+		});
+
+	},
+
+	appendText : function(el) {
+
+		// Match torrent name
+		var matches = $(el).attr('title').match(/(.*?)(\s|\.)S(\d{1,2})E(\d{2})(.*)/);
+
+		// Return when no matches found
+		if(matches == null) {
+			// Try matching for a whole season
+			matches = $(el).attr('title').match(/(.*?)(\s|\.)S(\d{1,2})(.*)/);
+
+			// Break when no matches found
+			if(matches == null) {
+				return false;
+			}
+		}
+
+		// Observer target
+		var target = $(el).closest('.box_torrent').next().next()[0];
+
+		// Callback
+		var observer = new WebKitMutationObserver(function(mutations) {
+
+			// Append new elements
+			$(target).find('.torrent_lenyilo_lehetoseg').append(
+				$('<div>', { class : 'download_separ' } )
+					.after( $('<div>', { class : 'ncext_subtitle_link fajlok_txt', html : '<a href="#">Felirat keresése a feliratok.info-n</a>' } ) )
+			);
+
+			// Stop observing
+			observer.disconnect();
+		});
+
+		// Start
+		observer.observe(target, { childList: true });
+	},
+
+	search : function(el) {
+
+		// Get torrent name
+		var name = $(el).closest('.torrent_lenyilo, .torrent_lenyilo2').prev().prev().find('.torrent_txt a, .torrent_txt2 a').attr('title');
+
+		// Get matches
+		var matches = name.match(/(.*?)(\s|\.)S(\d{1,2})E(\d{2})(.*)/);
+
+		// Build search
+		if(matches != null) {
+			var keywords = matches[1].replace(/\./g, ' ') + ' ' + matches[3].substr(1,1) + 'x' + matches[4];
+			var season = 0;
+		} else {
+			matches = name.match(/(.*?)(\s|\.)S(\d{1,2})(.*)/);
+			var keywords = matches[1].replace(/\./g, ' ') + ' Season ' + matches[3].substr(1,1);
+				keywords = keywords.replace(/(\-|COMPLETE|complete)/, '');
+			var season = 1;
+		}
+
+		// Build results GUI
+		find_subtitles.buildResultsGUI(keywords);
+
+		// Load subtitles via ajax
+		setTimeout(function() {
+			$.get('http://www.feliratok.info/?search='+keywords+'', function(data) {
+
+				// Build search
+				var results = find_subtitles.buildResults(data);
+
+				// If no one found search again with
+				// different keywords
+				if(results == 0 && season == 0) {
+
+					// Get new keywords
+					var keywords = matches[1].replace(/\./g, ' ') + ' Season ' + matches[3].substr(1,1);
+						keywords = keywords.replace(/(\-|COMPLETE|complete)/, '');
+
+					// Rewrite search indicator
+					$('#ncext_subtitle_results p').text('A bővítmény nem talált ehhez a részhez feliratot, keresés az egész évadra ...')
+
+					// Search again
+					$.get('http://www.feliratok.info/?search='+keywords+'', function(data) {
+
+						// Results
+						var results = find_subtitles.buildResults(data);
+
+						// If not found
+						if(results == 0) {
+							$('#ncext_subtitle_results table tr td:first').text('Nincs találat!').css('color', 'red');
+						}
+					});
+				} else if(results == 0) {
+					$('#ncext_subtitle_results table tr td:first').text('Nincs találat!').css('color', 'red');
+				}
+
+			});
+		}, 250);
+
+	},
+
+	buildResultsGUI : function(keywords) {
+
+		// Create HTML markup
+		$('body').append( $('<div>', { id : 'ncext_subtitle_overlay' } ) );
+		$('body').append( $('<div>', { id : 'ncext_subtitle_results' })
+			.append( $('<h1>', { text : 'Keresés a következőre: '+keywords+'' })
+			.after( $('<p>')
+			.after( $('<table>')
+				.append( $('<tr>')
+					.append( $('<td>', { colspan : '2', text : '... betöltés ...' } ))
+				)
+			)))
+		);
+
+		// Animate in
+		$('#ncext_subtitle_results').animate({
+			top : '50%', marginTop : $('#ncext_subtitle_results').height() / 2
+		}, 300);
+	},
+
+	buildResults : function(data) {
+
+		// Parse data
+		var tmp = $(data);
+
+		// Counter for results
+		var counter = 0;
+
+		// Populate the results list
+		tmp.find('.result tbody > tr').each(function(index) {
+
+			// Skip empty TRs
+			if( $(this).find('.eredeti:first').length == 0) {
+				return true;
+			}
+
+			// Increase the counter
+			counter++;
+
+			// Get lang flags
+			if( $(this).find('.lang small').html() == 'Magyar') {
+				var langImg = 'http://feliratok.info/img/flags/hungary.gif';
+			} else {
+				var langImg = 'http://feliratok.info/img/flags/uk.gif';
+			}
+
+			// Get DL link
+			var dlLink = 'http://feliratok.info' + $(this).find('td:last a').attr('href');
+
+			// Append result
+			$('#ncext_subtitle_results table').append(
+				$( $('<tr>')
+					.append( $('<td>', { html : '<img src="'+langImg+'">' })
+					.after( $('<td>', { html : '<a href="'+dlLink+'">'+$(this).find('.eredeti:first').text()+'</a>' } ))
+					)
+				)
+			);
+		});
+
+		if(counter > 0) {
+			$('#ncext_subtitle_results table tr:first').remove();
+			find_subtitles.posOverlay();
+		}
+
+		return counter;
+	},
+
+	posOverlay : function() {
+		$('#ncext_subtitle_results').animate({ 'margin-top' : -$('#ncext_subtitle_results').height() / 2 }, 300);
+	}
+};
+
 function extInit() {
 
 	// TORRENTS
@@ -443,6 +640,8 @@ function extInit() {
 		if(dataStore['show_covers'] == 'true') {
 			show_covers.init();
 		}
+
+		find_subtitles.init();
 
 	// FORUMS
 	} else if(document.location.href.indexOf('forum.php') != -1) {
