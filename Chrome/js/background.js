@@ -236,6 +236,15 @@ var notifications = {
 
 					// Show the notification
 					notification.show();
+
+					// Open search page with the new torrent
+					// when the user clicks on the notification
+					notification.onclick = function() {
+						chrome.tabs.create({
+							url : 'http://ncore.cc/torrents.php?'+obj['data']+'',
+							active : true
+						});
+					};
 				});
 
 				// Get lat torrent ID
