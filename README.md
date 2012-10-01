@@ -9,6 +9,7 @@ Az nCore nemhivatalos Chrome bővítménye. Ez jelenleg egy work-in-progress pro
 * Képernyőképeknél előnézet mutatása ha az egérkurzort a kép fölé visszük.
 * Mentett keresések, egyetlen kattintással előhozhatod a gyakran keresett tartalmakat.
 * Torrenthez tartozó borítóképek megjelenítése.
+* Becsúszó [origo] hirdetések blokkolása.
 * Keresőmező automatikus lenyitása.
 
 # Stabil verzió letöltése
