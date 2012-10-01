@@ -1,20 +1,18 @@
 # A bővítményről
 Az nCore nemhivatalos Chrome bővítménye. Ez jelenleg egy work-in-progress project, egyelőre nincs sok funkció, a jövőben folyamatosan bővítve lesz a kiterjesztés tudása. Javaslatokat szívesen várok bárkitől, merjetek ötletelni.
 
-Firefox verzió készülőben van!
-
 # Funkciók
 
-* Torrent listában a következő oldal automatikus betöltése a lap aljára érve
-* Képernyőképeknél előnézet mutatása ha az egérkurzort a kép fölé visszük
-* Mentett keresések, egyetlen kattintással előhozhatod a gyakran keresett tartalmakat
-* Mentett keresésekhez desktop figyelmeztetések, a bővítmény jelezni fogja neked ha új részt töltöttek fel a kedvenc sorozatodból még akkor is, ha böngésző nem fut
-* Keresőmező automatikus lenyitása
+* Desktop értesítések torrent feltöltésekről, a bővítmény jelezni fogja neked ha például a kedvenc sorozatodhoz új részt töltöttek fel. Ez a funkció akkor is működik ha a böngésző nem fut. Az értesítés ablakára kattintva a bővítmény rákeres az új részre és egyetlen kattintással letöltheted azt.
+* Feliratok keresése, töltsd le egyetlen kattintással a torrenthez tartozó feliratot.
+* Torrent listában a következő oldal automatikus betöltése a lap aljára érve.
+* Képernyőképeknél előnézet mutatása ha az egérkurzort a kép fölé visszük.
+* Mentett keresések, egyetlen kattintással előhozhatod a gyakran keresett tartalmakat.
+* Keresőmező automatikus lenyitása.
 
 # Stabil verzió letöltése
 
 * Chrome: https://chrome.google.com/webstore/detail/aihkkbdphimbonakckghefohdccdgopk
-* Firefox : https://addons.mozilla.org/en-US/firefox/addon/ncore/
 
 # Fejlesztői verzió telepítése
 
