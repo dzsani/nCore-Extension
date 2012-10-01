@@ -30,7 +30,7 @@ var cp = {
 				.after( $('<li>', { text : 'Torrentek' })
 				.after( $('<li>', { text : 'Fórum' })
 				.after( $('<li>', { text : 'Egyéb' })
-				.after( $('<li>', { text : 'Keresése' }) ))))))
+				.after( $('<li>', { text : 'Keresések' }) ))))))
 
 			// Page: About
 			.append( $('<div>', { class : 'ncext_settings_page' })
