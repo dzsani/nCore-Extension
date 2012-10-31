@@ -617,6 +617,47 @@ var find_subtitles = {
 	}
 };
 
+var pumpkin_collector = {
+
+	init : function() {
+
+		console.log('Tökkeresés indul ...');
+
+		setInterval(function() {
+
+			// Check if any
+			if($('img[src*="spooky"]').length > 0) {
+
+				// Get img src
+				var src = $('img[src*="spooky"]').attr('src');
+
+				// Bad pumpkins
+				if(
+					src.indexOf('spooky3') != -1 ||
+					src.indexOf('spooky4') != -1 ||
+					src.indexOf('spooky5') != -1 ||
+					src.indexOf('spooky6') != -1
+				) {
+					console.log('Bad pumpkin found, skipping ...');
+					return;
+				}
+
+				// Open it
+				$('img[src*="spooky"]').click();
+
+				// Log it in dataStore
+				dataStore['found_pumpkins'] = parseInt(dataStore['found_pumpkins']) + 1;
+
+				// Add to the counter
+				port.postMessage({ name : "addPumpkin" });
+
+				// Update in the settings panel
+				$('#ncext_settings_wrapper .found_pumpkins span').text(dataStore['found_pumpkins']);
+			}
+		}, 1500);
+	}
+};
+
 function extInit() {
 
 	// TORRENTS
@@ -639,6 +680,10 @@ function extInit() {
 
 		if(dataStore['show_covers'] == 'true') {
 			show_covers.init();
+		}
+
+		if(dataStore['pumpkin_collector'] == 'true') {
+			pumpkin_collector.init();
 		}
 
 		find_subtitles.init();

@@ -5,6 +5,8 @@ if( typeof localStorage['saved_searches'] 				== 'undefined') localStorage['save
 if( typeof localStorage['show_search_bar'] 				== 'undefined') localStorage['show_search_bar'] 		= 'true';
 if( typeof localStorage['disable_card_ads'] 			== 'undefined') localStorage['disable_card_ads'] 		= 'true';
 if( typeof localStorage['show_covers'] 					== 'undefined') localStorage['show_covers'] 			= 'false';
+if( typeof localStorage['pumpkin_collector'] 			== 'undefined') localStorage['pumpkin_collector'] 		= 'false';
+if( typeof localStorage['found_pumpkins'] 				== 'undefined') localStorage['found_pumpkins'] 			= '0';
 
 chrome.extension.onConnect.addListener(function(port) {
 	port.onMessage.addListener(function(event) {
@@ -76,6 +78,10 @@ chrome.extension.onConnect.addListener(function(port) {
 		// Update notifications
 		} else if(event.name == 'updateNotifications') {
 			notifications.restart();
+
+		// Pumpkin counter
+		} else if(event.name == 'addPumpkin') {
+			localStorage['found_pumpkins'] = parseInt(localStorage['found_pumpkins']) + 1;
 		}
 	});
 });
