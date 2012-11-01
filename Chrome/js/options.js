@@ -35,8 +35,8 @@ var cp = {
 			// Page: About
 			.append( $('<div>', { class : 'ncext_settings_page' })
 				.append( $('<h3>', { text : 'nCore' } ) )
-				.append( $('<p>', { text : 'Verzió: 1.3.0' } ) )
-				.append( $('<p>', { text : 'Kiadás dátuma: 2012. 10. 31.' }))
+				.append( $('<p>', { text : 'Verzió: 1.3.1' } ) )
+				.append( $('<p>', { text : 'Kiadás dátuma: 2012. 11. 01.' }))
 			)
 
 			// Page: Torrents
@@ -60,13 +60,6 @@ var cp = {
 					.append( $('<h3>', { text : 'Borítóképek mutatása' } ))
 					.append( $('<p>', { text : 'A kategóriaképek helyett a mű borítója fog megjelenni.' } ))
 					.append( $('<div>', { class : 'button', id : 'show_covers' } ))
-				)
-				.append( $('<div>')
-					.append( $('<h3>', { text : 'Spooky Dayz tökgyűjtő' } ))
-					.append( $('<p>', { text : 'A bővítmény automatikusan megtalálja és megnyitja a tököket ha futni hagyod az oldalt a háttérben.' } ))
-					.append( $('<p>', { class : 'found_pumpkins', text : 'Megtalált tökök: ' } )
-						.append( $('<span>', { text : dataStore['found_pumpkins'] } )))
-					.append( $('<div>', { class : 'button', id : 'pumpkin_collector' } ))
 				)
 			)
 

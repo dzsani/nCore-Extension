@@ -682,10 +682,6 @@ function extInit() {
 			show_covers.init();
 		}
 
-		if(dataStore['pumpkin_collector'] == 'true') {
-			pumpkin_collector.init();
-		}
-
 		find_subtitles.init();
 
 	// FORUMS
