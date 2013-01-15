@@ -147,7 +147,7 @@ var notifications = {
 		var obj = watchlist[index];
 
 		// Query data
-		$.post('http://ncore.cc/torrents.php?'+obj['data']+'', function(data) {
+		$.post('https://ncore.cc/torrents.php?'+obj['data']+'', function(data) {
 
 			// Login check
 			var matches = data.match(/<title>(.*?)<\/title>/);
@@ -190,7 +190,7 @@ var notifications = {
 			var watchlist = JSON.parse(localStorage['saved_searches']);
 			var obj = watchlist[index];
 
-			$.post('http://ncore.cc/torrents.php?'+obj['data']+'', function(data) {
+			$.post('https://ncore.cc/torrents.php?'+obj['data']+'', function(data) {
 
 				// Login check
 				var matches = data.match(/<title>(.*?)<\/title>/);
@@ -247,7 +247,7 @@ var notifications = {
 					// when the user clicks on the notification
 					notification.onclick = function() {
 						chrome.tabs.create({
-							url : 'http://ncore.cc/torrents.php?'+obj['data']+'',
+							url : 'https://ncore.cc/torrents.php?'+obj['data']+'',
 							active : true
 						});
 					};

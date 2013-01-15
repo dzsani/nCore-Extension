@@ -35,8 +35,8 @@ var cp = {
 			// Page: About
 			.append( $('<div>', { class : 'ncext_settings_page' })
 				.append( $('<h3>', { text : 'nCore' } ) )
-				.append( $('<p>', { text : 'Verzió: 1.3.1' } ) )
-				.append( $('<p>', { text : 'Kiadás dátuma: 2012. 11. 01.' }))
+				.append( $('<p>', { text : 'Verzió: 1.3.2' } ) )
+				.append( $('<p>', { text : 'Kiadás dátuma: 2013. 01. 15.' }))
 			)
 
 			// Page: Torrents
