@@ -1,12 +1,35 @@
-// Set default settings
-if( typeof localStorage['torrent_list_auto_pager']		== 'undefined') localStorage['torrent_list_auto_pager'] = 'true';
-if( typeof localStorage['screenshot_preview'] 			== 'undefined') localStorage['screenshot_preview'] 		= 'true';
-if( typeof localStorage['saved_searches'] 				== 'undefined') localStorage['saved_searches'] 			= '[]';
-if( typeof localStorage['show_search_bar'] 				== 'undefined') localStorage['show_search_bar'] 		= 'true';
-if( typeof localStorage['disable_card_ads'] 			== 'undefined') localStorage['disable_card_ads'] 		= 'true';
-if( typeof localStorage['show_covers'] 					== 'undefined') localStorage['show_covers'] 			= 'false';
-if( typeof localStorage['pumpkin_collector'] 			== 'undefined') localStorage['pumpkin_collector'] 		= 'false';
-if( typeof localStorage['found_pumpkins'] 				== 'undefined') localStorage['found_pumpkins'] 			= '0';
+/************************/
+/* SET DEFAULT SETTINGS */
+/************************/
+
+if( typeof localStorage['torrent_list_auto_pager'] == 'undefined')
+	localStorage['torrent_list_auto_pager'] = 'true';
+
+if( typeof localStorage['screenshot_preview'] == 'undefined')
+	localStorage['screenshot_preview'] = 'true';
+
+if( typeof localStorage['saved_searches'] == 'undefined')
+	localStorage['saved_searches'] = '[]';
+
+if( typeof localStorage['show_search_bar'] == 'undefined')
+	localStorage['show_search_bar'] = 'true';
+
+if( typeof localStorage['disable_card_ads'] == 'undefined')
+	localStorage['disable_card_ads'] = 'true';
+
+if( typeof localStorage['show_covers'] == 'undefined')
+	localStorage['show_covers'] = 'false';
+
+if( typeof localStorage['remove_torrent_notifications'] == 'undefined')
+	localStorage['remove_torrent_notifications'] = 'false';
+
+if( typeof localStorage['add_download_button'] == 'undefined')
+	localStorage['add_download_button'] = 'true';
+
+
+/**********/
+/* EVENTS */
+/**********/
 
 chrome.extension.onConnect.addListener(function(port) {
 	port.onMessage.addListener(function(event) {
@@ -85,6 +108,10 @@ chrome.extension.onConnect.addListener(function(port) {
 		}
 	});
 });
+
+/*****************/
+/* NOTIFICATIONS */
+/*****************/
 
 var notifications = {
 

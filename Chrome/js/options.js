@@ -35,8 +35,8 @@ var cp = {
 			// Page: About
 			.append( $('<div>', { class : 'ncext_settings_page' })
 				.append( $('<h3>', { text : 'nCore' } ) )
-				.append( $('<p>', { text : 'Verzió: 1.3.2' } ) )
-				.append( $('<p>', { text : 'Kiadás dátuma: 2013. 01. 15.' }))
+				.append( $('<p>', { text : 'Verzió: 1.4.0' } ) )
+				.append( $('<p>', { text : 'Kiadás dátuma: 2013. 01. 19.' }))
 			)
 
 			// Page: Torrents
@@ -46,16 +46,32 @@ var cp = {
 					.append( $('<p>', { text : 'Ezzel az opcióval soha nem kell manuálisan lapoznod, ahogy a lap aljára érkezel, a bővítmény előtölti a következő oldal tartalmát és azonnal beilleszti azt elnavigálás nélkül' } ))
 					.append( $('<div>', { class : 'button', id : 'torrent_list_auto_pager' } ))
 				)
+
 				.append( $('<div>')
 					.append( $('<h3>', { text : 'Képernyőképek előnézetének mutatása' } ))
 					.append( $('<p>', { text : 'Ha az egérkurzort a képernyőképek fölé viszed, a bővítmény azonnal megjeleníti a kép előnézetét kattintás nélkül.' } ))
 					.append( $('<div>', { class : 'button', id : 'screenshot_preview' } ))
 				)
+
 				.append( $('<div>')
 					.append( $('<h3>', { text : 'Keresőmező automatikus lenyitása' } ))
 					.append( $('<p>', { text : 'Néhány téma - köztük az alapértelmezett - elrejti a keresőmezőt és külön kattinttással lehet azt lenyitni. Ezzel az opcióval a keresőmező mindig nyitva marad.' } ))
 					.append( $('<div>', { class : 'button', id : 'show_search_bar' } ))
 				)
+
+				.append( $('<div>')
+					.append( $('<h3>', { text : 'Feltöltési értesítések elrejtése' } ))
+					.append( $('<p>', { text : 'Ezzel az opcióval a bal alsó sarokban megjelenő feltöltési értesítéseket távolíthatod el.' } ))
+					.append( $('<div>', { class : 'button', id : 'remove_torrent_notifications' } ))
+				)
+
+				/*
+				.append( $('<div>')
+					.append( $('<h3>', { text : 'Letöltés gomb elhelyezése a torrent listában' } ))
+					.append( $('<p>', { text : 'A bővítmény letöltési gombokat fog elhelyezni a torrent listában, így neked nem kell lenyitnod a torrent adatlapot a letöltéshez.' } ))
+					.append( $('<div>', { class : 'button', id : 'add_download_button' } ))
+				)*/
+
 				.append( $('<div>')
 					.append( $('<h3>', { text : 'Borítóképek mutatása' } ))
 					.append( $('<p>', { text : 'A kategóriaképek helyett a mű borítója fog megjelenni.' } ))

@@ -16,7 +16,7 @@ var torrent_list_auto_pager = {
 		});
 
 		if(torrent_list_auto_pager.currPage == null) {
-			if($('#pager_bottom').children().length == 1) {
+			if($('#pager_bottom').children().length < 2) {
 				torrent_list_auto_pager.currPage = 1;
 				torrent_list_auto_pager.maxPage = 1;
 			} else {
@@ -617,44 +617,33 @@ var find_subtitles = {
 	}
 };
 
-var pumpkin_collector = {
+var remove_torrent_notifications = {
+
+	init : function() {
+		$('#ape-container').hide();
+	},
+
+	destroy : function() {
+		$('#ape-container').show();
+	}
+};
+
+var add_download_button = {
 
 	init : function() {
 
-		console.log('Tökkeresés indul ...');
+		$('.box_torrent').each(function() {
 
-		setInterval(function() {
+			$(this).find('.box_nev, .box_nev2').append( $('<div>', { 'title' : 'Torrent letöltése', 'class' : 'torrent_new' })
+				.append( $('<a>', { 'href' : '' })
+					.append( $('<img>', { 'src' : chrome.extension.getURL('/img/content/download.png') }))
+				)
+			);
+		});
+	},
 
-			// Check if any
-			if($('img[src*="spooky"]').length > 0) {
+	destroy : function() {
 
-				// Get img src
-				var src = $('img[src*="spooky"]').attr('src');
-
-				// Bad pumpkins
-				if(
-					src.indexOf('spooky3') != -1 ||
-					src.indexOf('spooky4') != -1 ||
-					src.indexOf('spooky5') != -1 ||
-					src.indexOf('spooky6') != -1
-				) {
-					console.log('Bad pumpkin found, skipping ...');
-					return;
-				}
-
-				// Open it
-				$('img[src*="spooky"]').click();
-
-				// Log it in dataStore
-				dataStore['found_pumpkins'] = parseInt(dataStore['found_pumpkins']) + 1;
-
-				// Add to the counter
-				port.postMessage({ name : "addPumpkin" });
-
-				// Update in the settings panel
-				$('#ncext_settings_wrapper .found_pumpkins span').text(dataStore['found_pumpkins']);
-			}
-		}, 1500);
 	}
 };
 
@@ -676,6 +665,10 @@ function extInit() {
 
 		if(dataStore['show_search_bar'] == 'true') {
 			show_search_bar.init();
+		}
+
+		if(dataStore['remove_torrent_notifications'] == 'true') {
+			remove_torrent_notifications.init();
 		}
 
 		if(dataStore['show_covers'] == 'true') {

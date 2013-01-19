@@ -1,6 +1,6 @@
 {
   "name" : "nCore",
-  "version" : "1.3.2",
+  "version" : "1.4.0",
   "manifest_version" : 2,
   "description" : "An unofficial Chrome extension for nCore.",
   "icons": {
@@ -31,6 +31,7 @@
     "/img/settings/button.png",
     "/img/settings/icons.png",
     "/img/settings/remove.png",
-    "/img/icons/icon48.png"
+    "/img/icons/icon48.png",
+    "/img/content/download.png"
   ]
 }

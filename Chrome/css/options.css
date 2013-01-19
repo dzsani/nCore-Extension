@@ -34,6 +34,7 @@
 	overflow: hidden;
 	border: 1px solid #6c6c6c;
 	border-radius: 4px;
+	text-shadow: none !important;
 }
 
 #ncext_settings_header {

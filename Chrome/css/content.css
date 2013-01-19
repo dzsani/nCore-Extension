@@ -129,13 +129,14 @@
 	top: -100%;
 	z-index: 1002;
 	padding: 10px;
-	box-shadow: 0px 0px 10px 2px #000;
-	border-radius: 5px;
+	box-shadow: 0px 0px 10px 0px #000;
+	border-radius: 3px;
 	background-color: #fff;
 	margin-left: -350px;
 	-webkit-transition: height 0.3s ease-out;
 	color: #333;
 	font: normal normal bold 13px/16px Arial;
+	text-shadow: none !important;
 }
 
 #ncext_subtitle_results img {
